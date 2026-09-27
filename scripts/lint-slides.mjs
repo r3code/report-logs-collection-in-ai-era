@@ -2,10 +2,14 @@
 /**
  * Linter for slides.md — проверяет соблюдение Style Guide Дмитрия Синявского.
  *
+ * ПРАВИЛА (актуальные, важнее ранее определённых):
+ * - В тексте (вне code-блоков) используются ТОЛЬКО кавычки-ёлочки « »
+ * - В тексте используется СРЕДНЕЕ тире – (en dash, U+2013), не дефис и не длинное —
+ * - В code-блоках разрешены любые символы (синтаксис языка)
+ * - Шрифт везде чёрный, никаких оттенков серого (кроме подсветки кода)
+ *
  * Запуск:
  *   node scripts/lint-slides.mjs [path-to-slides.md]
- *
- * Возвращает exit code 1 если есть errors, 0 если только warnings или чисто.
  */
 
 import { readFileSync, existsSync } from 'node:fs'
@@ -24,20 +28,14 @@ const lines = src.split('\n')
 const errors = []
 const warnings = []
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
-
-function addError(line, msg) {
-  errors.push(`  L${line + 1}: ✗ ${msg}`)
-}
-function addWarning(line, msg) {
-  warnings.push(`  L${line + 1}: ⚠ ${msg}`)
-}
+function addError(line, msg) { errors.push(`  L${line + 1}: ✗ ${msg}`) }
+function addWarning(line, msg) { warnings.push(`  L${line + 1}: ⚠ ${msg}`) }
 
 // ─── 1. Frontmatter ────────────────────────────────────────────────────────
 
 const fmMatch = src.match(/^---\n([\s\S]*?)\n---/)
 if (!fmMatch) {
-  errors.push('  ✗ Frontmatter не найден (ожидался блок --- в начале файла)')
+  errors.push('  ✗ Frontmatter не найден')
 } else {
   const fm = fmMatch[1]
   const required = {
@@ -60,109 +58,134 @@ if (!fmMatch) {
   }
 }
 
-// ─── 2. Кавычки и тире ─────────────────────────────────────────────────────
-// Style Guide: только прямые кавычки " и только дефисы -
-// Запрещены: « » " " „ " — –
+// ─── 2. Отслеживание code-блоков ───────────────────────────────────────────
 
-const forbiddenChars = [
-  { ch: '«', name: 'левая типографская кавычка «', replacement: '"' },
-  { ch: '»', name: 'правая типографская кавычка »', replacement: '"' },
-  { ch: '\u201C', name: 'левая двойная "smart" кавычка', replacement: '"' },
-  { ch: '\u201D', name: 'правая двойная "smart" кавычка', replacement: '"' },
-  { ch: '\u2018', name: 'левая одинарная кавычка', replacement: "'" },
-  { ch: '\u2019', name: 'правая одинарная кавычка', replacement: "'" },
-  { ch: '—', name: 'длинное тире —', replacement: '-' },
-  { ch: '–', name: 'среднее тире –', replacement: '-' },
-]
+let inCodeBlock = false
+const codeBlockLines = []
+const textLines = []
 
 lines.forEach((line, i) => {
-  // Пропускаем строки внутри code-блоков
-  // Простая проверка — если строка внутри блока ``` ... ```
-  for (const { ch, name, replacement } of forbiddenChars) {
-    if (line.includes(ch)) {
-      addError(i, `Запрещённый символ "${name}" — замените на "${replacement}"`)
+  // ``` открывает или закрывает code-блок
+  if (line.trim().startsWith('```')) {
+    if (inCodeBlock) {
+      codeBlockLines.push(i)
+      inCodeBlock = false
+    } else {
+      inCodeBlock = true
+      codeBlockLines.push(i)
     }
+    return
+  }
+  if (inCodeBlock) {
+    codeBlockLines.push(i)
+  } else {
+    textLines.push({ line: i, text: line })
   }
 })
 
-// ─── 3. Структура слайдов ──────────────────────────────────────────────────
+// ─── 3. Проверка кавычек и тире ВНЕ code-блоков ────────────────────────────
+//
+// ПРАВИЛА (актуальные):
+//   В тексте: только « » (елочки), только – (среднее тире)
+//   Запрещены в тексте: " (прямые), " " (smart), ' ' (одинарные),
+//                       — (длинное), - как тире (с пробелами вокруг)
+//   Дефис в составных словах (по-русски, из-за) - ОК
+//
+// Дополнительно: HTML-атрибуты могут содержать " (например, class="..."),
+// это разрешено, но только внутри <tag attr="value">
+
+const FORBIDDEN_IN_TEXT = [
+  { ch: '"', name: 'прямая двойная кавычка "', replacement: '« или » (елочки)' },
+  { ch: '\u201C', name: 'левая smart-кавычка', replacement: '«' },
+  { ch: '\u201D', name: 'правая smart-кавычка', replacement: '»' },
+  { ch: '\u2018', name: 'левая одинарная кавычка', replacement: "'" },
+  { ch: '\u2019', name: 'правая одинарная кавычка', replacement: "'" },
+  { ch: '—', name: 'длинное тире —', replacement: '– (среднее тире)' },
+]
+
+// Регэксп для поиска HTML-атрибутов: <tag attr="value">
+// Это позволит пропускать " внутри атрибутов
+const HTML_ATTR_REGEX = /\s\w+="[^"]*"/g
+
+textLines.forEach(({ line, text }) => {
+  // Убираем HTML-атрибуты из строки перед проверкой кавычек
+  const cleaned = text.replace(HTML_ATTR_REGEX, '')
+
+  for (const { ch, name, replacement } of FORBIDDEN_IN_TEXT) {
+    if (cleaned.includes(ch)) {
+      addError(line, `Запрещённый символ "${name}" в тексте — замените на ${replacement}`)
+    }
+  }
+
+  // Проверка: " - " с пробелами вокруг — это тире, должно быть –
+  // (дефис в составных словах ОК)
+  if (/\s-\s/.test(cleaned)) {
+    addError(line, 'Дефис как тире (с пробелами вокруг) — замените на среднее тире – (U+2013)')
+  }
+})
+
+// ─── 4. Структура слайдов ──────────────────────────────────────────────────
 
 const slideSeparators = []
 lines.forEach((line, i) => {
-  if (line.trim() === '---') {
-    slideSeparators.push(i)
-  }
+  if (line.trim() === '---') slideSeparators.push(i)
 })
 const slideCount = slideSeparators.length + 1
 if (slideCount < 5) {
-  warnings.push(`  ⚠ Мало слайдов: ${slideCount}. Минимум 5 по Style Guide`)
+  warnings.push(`  ⚠ Мало слайдов: ${slideCount}. Минимум 5`)
 }
 
-// ─── 4. v-click паттерн ────────────────────────────────────────────────────
-// Style Guide: активный пункт → ➔ (U+2794), пройденный → • (U+2022)
+// ─── 5. v-click ────────────────────────────────────────────────────────────
 
-let hasProgressive = false
-lines.forEach((line, i) => {
-  if (line.includes('<v-click>')) hasProgressive = true
-  // Если в строке есть ➔ но она не внутри v-click — возможно проблема
-  // (но v-click может быть на предыдущей строке, поэтому только warn)
-})
-
-if (!hasProgressive) {
+if (!src.includes('<v-click>')) {
   warnings.push('  ⚠ Не найдено ни одного <v-click> — Progressive Disclosure не используется')
 }
 
-// ─── 5. Разделители разделов: bg-black text-white ──────────────────────────
-// Не enforced, но предупреждаем если нет ни одного
+// ─── 6. Слайды-разделители ─────────────────────────────────────────────────
 
 if (!src.includes('bg-black') || !src.includes('text-white')) {
-  warnings.push('  ⚠ Не найдено слайдов-разделителей (bg-black text-white). Style Guide требует чёрные разделители разделов')
+  warnings.push('  ⚠ Не найдено слайдов-разделителей (bg-black text-white)')
 }
 
-// ─── 6. Размеры шрифтов ────────────────────────────────────────────────────
-// Style Guide: заголовки 32pt, текст 21pt, код 18pt
-// Проверяем, что в slides.md нет явных text-sm/text-xs/text-lg нарушающих гайд
-// (если используете CSS-классы — это в style.css, здесь не проверяем)
+// ─── 7. Запрет text-gray-* ─────────────────────────────────────────────────
+// Style Guide: шрифт везде чёрный, никаких оттенков серого, кроме кода
 
-const smallFontClasses = ['text-xs', 'text-sm', 'text-base']
-lines.forEach((line, i) => {
-  for (const cls of smallFontClasses) {
-    if (line.includes(`class="${cls}`) || line.includes(`class="... ${cls}`)) {
-      addWarning(i, `Класс "${cls}" делает шрифт меньше Style Guide (минимум 21pt основной текст)`)
-    }
+textLines.forEach(({ line, text }) => {
+  // text-gray-900, text-gray-500, text-gray-600, etc — запрещены
+  const grayMatch = text.match(/text-gray-(?:50|100|200|300|400|500|600|700|800|900)/g)
+  if (grayMatch) {
+    addError(line, `Запрещён серый цвет: ${grayMatch.join(', ')} — используйте text-black (Style Guide: только чёрный)`)
   }
 })
 
-// ─── 7. HTML-теги без экранирования ────────────────────────────────────────
-// Style Guide: не использовать < и > внутри HTML-тегов без экранирования
-// Это сложно проверить статически, но можем найти очевидные кейсы вроде <3 или >5
-
-lines.forEach((line, i) => {
-  // Пропускаем code-блоки — это сложнее, делаем простой эвристический проход
-  const codeBlockMatch = line.match(/```/)
-  if (codeBlockMatch) return
-
-  // Ищем " < " или " > " в тексте (не в тегах)
-  // Пропускаем строки, начинающиеся с < (это теги)
-  if (!line.trim().startsWith('<') && !line.trim().startsWith('-')) {
-    if (/\s<\s/.test(line) && !line.includes('&lt;')) {
-      addWarning(i, `Возможно, неэкранированный "<" в тексте — замените на &lt;`)
-    }
-  }
-})
-
-// ─── 8. Плейсхолдеры для картинок ──────────────────────────────────────────
-// Style Guide: картинки — плейсхолдеры в <div class="bg-gray-200 border-2 border-dashed border-gray-400">
-
-if (src.includes('![') && !src.includes('bg-gray-200')) {
-  warnings.push('  ⚠ Найдены markdown-картинки (![]) без плейсхолдеров. Style Guide требует <div class="bg-gray-200 border-2 border-dashed border-gray-400">')
-}
-
-// ─── 9. Финальный слайд ────────────────────────────────────────────────────
-// Style Guide: финальный слайд — t.me/letitkit + QR
+// ─── 8. Финальный слайд: t.me/letitkit ─────────────────────────────────────
 
 if (!src.includes('t.me/letitkit')) {
-  warnings.push('  ⚠ Финальный слайд: не найдена ссылка t.me/letitkit (Style Guide требует)')
+  warnings.push('  ⚠ Финальный слайд: не найдена ссылка t.me/letitkit')
+}
+
+// ─── 9. Markdown-картинки без плейсхолдеров ────────────────────────────────
+
+if (src.includes('![') && !src.includes('bg-gray-200')) {
+  warnings.push('  ⚠ Найдены markdown-картинки (![]) без плейсхолдеров')
+}
+
+// ─── 10. Номер слайда (info) ───────────────────────────────────────────────
+// Style Guide: номер слайда справа сверху, кроме главного и последнего
+// Реализовано через CSS: .slidev-layout:not(.cover):not(.end)::after
+// Здесь только проверяем, что есть class: cover и class: end
+
+const firstSlideMatch = src.match(/^---[\s\S]*?---\n[\s\S]*?(?=\n---)/)
+const lastSlideMatch = src.match(/---\n([\s\S]*?)$/)
+
+const hasCoverClass = /class:.*\bcover\b/.test(src) || /layout:\s*cover/.test(src)
+const hasEndClass = /class:.*\bend\b/.test(src) || /layout:\s*end/.test(src)
+
+if (!hasCoverClass) {
+  warnings.push('  ⚠ Не найден class: cover или layout: cover для первого слайда (номер не должен показываться на титуле)')
+}
+if (!hasEndClass) {
+  warnings.push('  ⚠ Не найден class: end или layout: end для последнего слайда (номер не должен показываться на финале)')
 }
 
 // ─── Report ────────────────────────────────────────────────────────────────
@@ -170,6 +193,7 @@ if (!src.includes('t.me/letitkit')) {
 console.log('\n── Lint slides.md ────────────────────────────────────────')
 console.log(`Файл: ${SLIDES_PATH}`)
 console.log(`Слайдов: ~${slideCount}`)
+console.log(`Вне code-блоков: ${textLines.length} строк`)
 console.log(`Errors:   ${errors.length}`)
 console.log(`Warnings: ${warnings.length}`)
 console.log('')
