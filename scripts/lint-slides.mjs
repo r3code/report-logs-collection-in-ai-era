@@ -107,9 +107,14 @@ const FORBIDDEN_IN_TEXT = [
 // Это позволит пропускать " внутри атрибутов
 const HTML_ATTR_REGEX = /\s\w+="[^"]*"/g
 
+// Регэксп для инлайн-кода: `code`
+const INLINE_CODE_REGEX = /`[^`]*`/g
+
 textLines.forEach(({ line, text }) => {
-  // Убираем HTML-атрибуты из строки перед проверкой кавычек
-  const cleaned = text.replace(HTML_ATTR_REGEX, '')
+  // Убираем HTML-атрибуты и инлайн-код перед проверкой кавычек
+  const cleaned = text
+    .replace(HTML_ATTR_REGEX, '')
+    .replace(INLINE_CODE_REGEX, '')
 
   for (const { ch, name, replacement } of FORBIDDEN_IN_TEXT) {
     if (cleaned.includes(ch)) {
@@ -170,16 +175,13 @@ if (src.includes('![') && !src.includes('bg-gray-200')) {
   warnings.push('  ⚠ Найдены markdown-картинки (![]) без плейсхолдеров')
 }
 
-// ─── 10. Номер слайда (info) ───────────────────────────────────────────────
-// Style Guide: номер слайда справа сверху, кроме главного и последнего
-// Реализовано через CSS: .slidev-layout:not(.cover):not(.end)::after
-// Здесь только проверяем, что есть class: cover и class: end
+// ─── 10. Номер слайда ───────────────────────────────────────────────────
+// Реализован через components/global-top.vue + slide-number.vue
+// Первый слайд должен иметь layout: cover или class: cover
+// Последний слайд должен иметь layout: end или class: end
 
-const firstSlideMatch = src.match(/^---[\s\S]*?---\n[\s\S]*?(?=\n---)/)
-const lastSlideMatch = src.match(/---\n([\s\S]*?)$/)
-
-const hasCoverClass = /class:.*\bcover\b/.test(src) || /layout:\s*cover/.test(src)
-const hasEndClass = /class:.*\bend\b/.test(src) || /layout:\s*end/.test(src)
+const hasCoverClass = /class:[^\n]*\bcover\b/.test(src) || /layout:\s*cover/.test(src)
+const hasEndClass = /class:[^\n]*\bend\b/.test(src) || /layout:\s*end/.test(src)
 
 if (!hasCoverClass) {
   warnings.push('  ⚠ Не найден class: cover или layout: cover для первого слайда (номер не должен показываться на титуле)')
