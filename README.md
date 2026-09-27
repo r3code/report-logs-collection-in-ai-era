@@ -24,7 +24,11 @@ pnpm export-pdf  # экспорт в PDF
 - `pages/` — вынесенные слайды (через `src:`)
 - `components/` — пользовательские Vue-компоненты
 - `snippets/` — фрагменты кода для подсветки
+- `.github/workflows/deploy.yml` — CI: сборка и публикация на GitHub Pages
 
-## Открыть в StackBlitz
+## Превью
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/r3code/report-logs-collection-in-ai-era)
+При каждом пуше в `main` GitHub Actions автоматически собирает презентацию
+и публикует на GitHub Pages:
+
+https://r3code.github.io/report-logs-collection-in-ai-era/

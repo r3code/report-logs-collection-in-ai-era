@@ -5,6 +5,7 @@
   "packageManager": "pnpm@8.15.6",
   "scripts": {
     "build": "slidev build",
+    "build:pages": "slidev build --base /report-logs-collection-in-ai-era/",
     "dev": "slidev --open",
     "export": "slidev export",
     "export-pdf": "slidev export --format pdf"
