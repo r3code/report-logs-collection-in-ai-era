@@ -9,7 +9,7 @@ fonts:
   mono: 'Fira Code'
 ---
 
-# ПРИВЕТ МИР — Сбор логов на vector и clickhouse — то, что ИИ за тебя не сделал бы
+# Сбор логов на vector и clickhouse — то, что ИИ за тебя не сделал бы
 
 Дмитрий Синявский, SRE, @r3code
 
