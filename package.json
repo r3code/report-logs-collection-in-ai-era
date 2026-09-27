@@ -1,0 +1,16 @@
+{
+  "name": "report-logs-collection-in-ai-era",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@8.15.6",
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export",
+    "export-pdf": "slidev export --format pdf"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.14.2",
+    "@slidev/theme-default": "latest"
+  }
+}
