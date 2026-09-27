@@ -8,7 +8,8 @@
     "build:pages": "slidev build --base /report-logs-collection-in-ai-era/",
     "dev": "slidev --open",
     "export": "slidev export",
-    "export-pdf": "slidev export --format pdf"
+    "export-pdf": "slidev export --format pdf",
+    "lint": "node scripts/lint-slides.mjs"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2",

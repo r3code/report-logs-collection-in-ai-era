@@ -1,0 +1,123 @@
+name: Export PPTX (images)
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Коммит/ветка для экспорта (по умолчанию main)'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: read
+
+jobs:
+  export-pptx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.commit || 'main' }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium for puppeteer
+        run: pnpm exec playwright install chromium --with-deps
+        continue-on-error: true
+
+      - name: Install python-pptx
+        run: pip install --no-cache-dir python-pptx
+
+      - name: Export slides to PNG
+        # slidev export --format png выдаёт один PNG со всеми слайдами в сетке
+        # поэтому используем --format png с опцией per-slide (через отдельный вызов)
+        run: |
+          mkdir -p slides-png
+          pnpm exec slidev export --format png --output "slides-png/slide" --timeout 60000
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+
+      - name: List exported PNGs
+        run: ls -la slides-png/
+
+      - name: Build PPTX from PNGs
+        run: |
+          python3 <<'PYEOF'
+          import os
+          import glob
+          from pptx import Presentation
+          from pptx.util import Inches, Emu
+
+          # 16:9 стандартный размер слайда PowerPoint
+          # 13.333 дюйма x 7.5 дюйма = 1280x720 pt при 96 DPI
+          prs = Presentation()
+          prs.slide_width = Inches(13.333)
+          prs.slide_height = Inches(7.5)
+
+          # Slidev нумерует файлы slide-1.png, slide-2.png, ... slide-10.png, slide-11.png
+          # Поэтому нужна естественная сортировка
+          def natural_key(name):
+              import re
+              return [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', name)]
+
+          pngs = sorted(glob.glob('slides-png/*.png'), key=natural_key)
+          print(f"Найдено PNG: {len(pngs)}")
+          for p in pngs:
+              print(f"  - {p}")
+
+          if not pngs:
+              raise SystemExit("PNG не найдены - экспорт не удался")
+
+          blank_layout = prs.slide_layouts[6]  # 6 = Blank
+
+          for png in pngs:
+              slide = prs.slides.add_slide(blank_layout)
+              # Картинка на весь слайд
+              slide.shapes.add_picture(
+                  png,
+                  left=0,
+                  top=0,
+                  width=prs.slide_width,
+                  height=prs.slide_height,
+              )
+
+          out = "Сбор-логов-на-vector-и-clickhouse.pptx"
+          prs.save(out)
+          print(f"Создан: {out}")
+          print(f"Размер: {os.path.getsize(out)} байт")
+          print(f"Слайдов в PPTX: {len(prs.slides)}")
+          PYEOF
+
+      - name: Upload PPTX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-pptx
+          path: "*.pptx"
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PNG artifact (опционально)
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-png
+          path: slides-png/*.png
+          if-no-files-found: error
+          retention-days: 14

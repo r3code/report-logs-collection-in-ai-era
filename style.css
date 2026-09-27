@@ -1,0 +1,145 @@
+/* ─── Style Guide Дмитрия Синявского ────────────────────────────────────
+ * Заголовки:  Arial, 32pt
+ * Основной:   Arial, 21pt, line-height 1.15
+ * Код:        Fira Code, 18pt
+ * ──────────────────────────────────────────────────────────────────────
+ * Используем !important чтобы перебить дефолтные стили темы Slidev.
+ */
+
+/* Базовый текст слайда - 21pt */
+.slidev-layout,
+.slidev-layout p,
+.slidev-layout li,
+.slidev-layout td,
+.slidev-layout th {
+  font-size: 21pt !important;
+  line-height: 1.15 !important;
+  font-family: 'Arial', sans-serif !important;
+}
+
+/* Списки - небольшой отступ между пунктами */
+.slidev-layout li {
+  margin-bottom: 0.4em !important;
+}
+
+/* Заголовки слайда (h1) - 32pt */
+.slidev-layout h1 {
+  font-size: 32pt !important;
+  line-height: 1.1 !important;
+  font-weight: 700 !important;
+  font-family: 'Arial', sans-serif !important;
+  margin-bottom: 0.5em !important;
+}
+
+.slidev-layout h2 {
+  font-size: 28pt !important;
+  line-height: 1.1 !important;
+  font-weight: 700 !important;
+  font-family: 'Arial', sans-serif !important;
+  margin-bottom: 0.4em !important;
+}
+
+.slidev-layout h3 {
+  font-size: 24pt !important;
+  line-height: 1.15 !important;
+  font-weight: 600 !important;
+  font-family: 'Arial', sans-serif !important;
+}
+
+/* Код - Fira Code, 18pt */
+.slidev-layout pre,
+.slidev-layout code,
+.slidev-layout pre code {
+  font-family: 'Fira Code', monospace !important;
+  font-size: 18pt !important;
+  line-height: 1.25 !important;
+}
+
+/* Инлайн-код */
+.slidev-layout :not(pre) > code {
+  font-size: 18pt !important;
+  background: #f3f4f6 !important;
+  padding: 0.1em 0.35em !important;
+  border-radius: 0.25em !important;
+}
+
+/* Code-блоки - светлый фон и скругление */
+.slidev-layout pre {
+  background: #f3f4f6 !important;
+  padding: 0.75em 1em !important;
+  border-radius: 0.5em !important;
+  font-size: 18pt !important;
+}
+
+.slidev-layout pre code {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* ─── Анимация списков: Progressive Disclosure ──────────────────────────
+ * Активный пункт: ➔ (U+2794), text-gray-900
+ * Пройденный:     • (U+2022), text-gray-500, mb-6
+ */
+
+.slidev-layout .text-gray-900 { color: #111827 !important; }
+.slidev-layout .text-gray-500 { color: #6b7280 !important; }
+.slidev-layout .text-gray-600 { color: #4b5563 !important; }
+
+/* ─── Слайды-разделители разделов ──────────────────────────────────────
+ * Чёрный фон, белый текст, центрирование
+ * Использование в slides.md:
+ *   ---
+ *   layout: center
+ *   class: bg-black text-white
+ *   ---
+ */
+.slidev-layout.bg-black,
+.bg-black.slidev-layout {
+  background: #000 !important;
+  color: #fff !important;
+}
+.slidev-layout.bg-black h1,
+.slidev-layout.bg-black h2,
+.bg-black.slidev-layout h1,
+.bg-black.slidev-layout h2 {
+  color: #fff !important;
+}
+
+/* ─── Плейсхолдеры для картинок ──────────────────────────────────────── */
+.slidev-layout .bg-gray-200 {
+  background-color: #e5e7eb !important;
+}
+.slidev-layout .border-dashed {
+  border-style: dashed !important;
+}
+.slidev-layout .border-2 {
+  border-width: 2px !important;
+}
+.slidev-layout .border-gray-400 {
+  border-color: #9ca3af !important;
+}
+
+/* ─── Таблицы ────────────────────────────────────────────────────────── */
+.slidev-layout table {
+  font-size: 18pt !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+.slidev-layout th,
+.slidev-layout td {
+  padding: 0.5em 0.75em !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  text-align: left !important;
+}
+.slidev-layout th {
+  background: #f9fafb !important;
+  font-weight: 600 !important;
+}
+
+/* ─── Большие KPI-цифры (слайд "Обо мне") ────────────────────────────── */
+.slidev-layout .text-5xl {
+  font-size: 48pt !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+  font-family: 'Arial', sans-serif !important;
+}

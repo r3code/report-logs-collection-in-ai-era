@@ -1,0 +1,54 @@
+name: Export PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Коммит/ветка для экспорта (по умолчанию main)'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: read
+
+jobs:
+  export-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.commit || 'main' }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium for puppeteer
+        # Slidev export использует puppeteer, которому нужен Chromium
+        # На ubuntu-latest обычно есть, но ставим явную зависимость
+        run: pnpm exec playwright install chromium --with-deps
+        continue-on-error: true
+
+      - name: Export slides to PDF
+        run: pnpm exec slidev export --format pdf --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 60000
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-pdf
+          path: "*.pdf"
+          if-no-files-found: error
+          retention-days: 30
