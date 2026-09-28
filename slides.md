@@ -15,7 +15,7 @@ layout: cover
 </div>
 
 <div class="relative z-10 w-1/2 pr-8">
-# Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы
+<h1>Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы</h1>
 
 <p class="speaker-name">Дмитрий Синявский</p>
 <p class="speaker-role">Инженер по надёжности (SRE)</p>

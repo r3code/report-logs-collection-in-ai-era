@@ -191,9 +191,9 @@
 
 /* ─── Progressive Disclosure: списки через ul/li ────────────────────────
  * Используем <ul class="progressive"> с <li> внутри.
- * Активный пункт: data-active → символ ➔ (heavy rounded arrow)
+ * Активный пункт: data-active → символ ➜ (U+279C, heavy round tipped arrow)
  * Пройденный пункт: по умолчанию → символ •
- * Размер символа 14pt чтобы визуально не двигал строку
+ * Размер булета 18pt
  */
 
 .slidev-layout ul.progressive,
@@ -214,23 +214,25 @@
   line-height: 1.3 !important;
 }
 
-/* Пройденный пункт: • (кружок) */
+/* Пройденный пункт: • (кружок) 18pt */
 .slidev-layout ul.progressive li::before {
   content: '•' !important;
   position: absolute !important;
   left: 0 !important;
   top: 0 !important;
-  font-size: 14pt !important;
+  font-size: 18pt !important;
   color: #000 !important;
   font-weight: 400 !important;
   line-height: 1.3 !important;
+  font-family: 'Arial', 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif !important;
 }
 
-/* Активный пункт: ➔ (heavy rounded arrow) + bold */
+/* Активный пункт: ➜ (U+279C heavy round tipped arrow) + bold */
 .slidev-layout ul.progressive li.active::before {
-  content: '➔' !important;
-  font-size: 14pt !important;
+  content: '➜' !important;
+  font-size: 18pt !important;
   font-weight: 700 !important;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', 'Arial', sans-serif !important;
 }
 
 .slidev-layout ul.progressive li.active {
