@@ -150,8 +150,6 @@ layout: cover
 -->
 
 ---
-
----
 class: bg-black text-white flex flex-col justify-center p-20
 ---
 
