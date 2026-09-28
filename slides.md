@@ -16,10 +16,6 @@ class: cover
 <p class="speaker-role">Инженер по надёжности (SRE)</p>
 <p class="speaker-company">Ви.Tech</p>
 
-<div class="absolute right-0 bottom-0 w-1/2 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [ИЗОБРАЖЕНИЕ: прижато вправо-вниз, занимает половину слайда, не перекрывает текст слева.<br>Тематическая картинка или схема стека Vector → ClickHouse]
-</div>
-
 <!--
 Открываю доклад. 35 минут поговорим про то, что ИИ не скажет вам про сбор логов на Vector и ClickHouse. Это не введение в инструмент, это эмпирические ловушки, которые я выстрадал в продакшене Ви.Tech. Аудитория — Middle+ DevOps/SRE, которые уже масштабировали инфраструктуру.
 
@@ -32,34 +28,23 @@ class: cover
 
 <div v-if="$clicks === 0" class="text-black">
 <p class="text-black font-bold mb-6">➔ Иллюзия «готового решения»</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №1: масштабирование управления</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №3: хранение как политика данных</p>
-<p class="text-black font-bold mb-6">➔ Итоги – 3 принципа</p>
 </div>
 
 <div v-if="$clicks === 1" class="text-black">
 <p class="text-black font-bold mb-6">➔ Иллюзия «готового решения»</p>
-<p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
-<p class="text-black mb-6">• Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black mb-6">• Ловушка №3: хранение как политика данных</p>
-<p class="text-black mb-6">• Итоги – 3 принципа</p>
+
 </div>
 
 <div v-if="$clicks === 2" class="text-black">
 <p class="text-black mb-6">• Иллюзия «готового решения»</p>
 <p class="text-black font-bold mb-6">➔ Ловушка №1: масштабирование управления</p>
-<p class="text-black mb-6">• Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black mb-6">• Ловушка №3: хранение как политика данных</p>
-<p class="text-black mb-6">• Итоги – 3 принципа</p>
+
 </div>
 
 <div v-if="$clicks === 3" class="text-black">
 <p class="text-black mb-6">• Иллюзия «готового решения»</p>
 <p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
 <p class="text-black font-bold mb-6">➔ Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black mb-6">• Ловушка №3: хранение как политика данных</p>
-<p class="text-black mb-6">• Итоги – 3 принципа</p>
 </div>
 
 <div v-if="$clicks === 4" class="text-black">
@@ -67,7 +52,6 @@ class: cover
 <p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
 <p class="text-black mb-6">• Ловушка №2: инфраструктурные ограничения</p>
 <p class="text-black font-bold mb-6">➔ Ловушка №3: хранение как политика данных</p>
-<p class="text-black mb-6">• Итоги – 3 принципа</p>
 </div>
 
 <div v-if="$clicks >= 5" class="text-black">
