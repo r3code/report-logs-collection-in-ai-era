@@ -169,7 +169,9 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 **До первого реального сервиса** в проде
 
-Сегодня – 3 класса проблем, которые ИИ не предскажет
+<div class="mt-8">
+  <img src="/images/expectation-reality.png" class="max-h-72 mx-auto rounded" alt="Ожидание / Реальность">
+</div>
 
 <!--
 Тезис доклада: конфиг работает в вакууме, но в продакшене масштабируются не инструменты, а проблемы управления ими.
@@ -556,22 +558,19 @@ SETTINGS index_granularity = 8192,
 
 - **`logs_local` + `logs` (Distributed)** – на каждом узле
 
-- **Динамический TTL через `TTL UInt16`** – не фиксированный для таблицы
-
-- **`ZSTD(1)`** – сжатие, баланс CPU/место
+- **Динамический TTL через `TTL UInt16`**
 
 <!--
 `ttl_only_drop_parts = 0` — позволяем ClickHouse удалять части с истёкшим TTL, не дожидаясь полного парта. Чуть больше нагрузки на merge, но TTL срабатывает точнее. Без этого если запись с TTL=3 и TTL=30 оказались в одной партиции ClickHouse, то удалится она только когда запись с TTL=30 протухнет — а нам надо раньше.
-
-Сжатие ZSTD(1) — баланс между CPU и местом. На текстовых логах даёт 10–20x сжатия.
 -->
 
 ---
 
 # У нас было 3 SRE на 100 сервисов
 
-<div class="flex items-center justify-center h-3/4">
-  <img src="/images/strah-nenavist-lasvegas.jpg" class="max-h-full max-w-full object-contain" alt="Страх и ненависть в Лас-Вегасе">
+<div class="flex flex-col items-center">
+  <img src="/images/strah-nenavist-lasvegas.jpg" class="max-h-3/4 max-w-full object-contain" alt="Страх и ненависть в Лас-Вегасе">
+  <p class="text-2xl font-bold mt-6">И ВАРИАНТЫ УПРАВЛЯТЬ TTL</p>
 </div>
 
 <!--
