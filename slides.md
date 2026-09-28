@@ -107,6 +107,7 @@ layout: cover
 </div>
 
 <div class="absolute right-0 top-0 bottom-0 w-2/3 h-full flex flex-col justify-center px-12">
+  
 # Обо мне
 
 <div class="grid grid-cols-2 gap-6 mt-8">
