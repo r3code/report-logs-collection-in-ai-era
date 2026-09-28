@@ -14,7 +14,7 @@ layout: cover
   <img src="/images/bg-slide-1.png" class="w-full h-full object-cover" alt="Фон презентации">
 </div>
 
-<p class="absolute bottom-2 right-3 z-20" style="font-size: 10pt !important; color: #6b7280 !important;">20260928_01</p>
+<p class="absolute bottom-0 right-3 z-20" style="font-size: 10pt !important; color: #374151 !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">20260928_01</p>
 
 <div class="relative z-10 w-1/2 pr-8">
 <h1>Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы</h1>
