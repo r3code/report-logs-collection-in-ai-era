@@ -157,8 +157,8 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 Он выдаст идеальный конфиг Vector. Запустите его – и всё заработает. Но только пока сервисов мало и логи предсказуемые.
 
-<div class="absolute right-10 bottom-10 w-1/3 h-1/3 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [СКРИНШОТ: идеальный ответ Claude рядом с графиком реального инцидента]
+<div class="absolute left-0 right-0 bottom-0 h-1/2">
+  <img src="/images/chatgpt-vector-01.png" class="w-full h-full object-contain" alt="Ответ ChatGPT: схема Vector → ClickHouse">
 </div>
 
 <!--
@@ -233,6 +233,14 @@ LLM здесь молчит, потому что он знает синтакс�
 tags.vitech.team/service_name: my-cool-service
 ```
 
+<!--
+Решение: перешли от аннотаций на контейнерах к лейблу на namespace. Один лейбл — `tags.vitech.team/service_name: my-cool-service` — и весь namespace собирается.
+-->
+
+---
+
+# Ловушка №1: исключения
+
 Собираем всё, но с исключениями. Кроме наших настроек с `excluded_services`, есть встроенные в Vector аннотации:
 
 ```yaml
@@ -240,9 +248,9 @@ vector.dev/exclude: "true"
 vector.dev/exclude-containers: "container1,container2"
 ```
 
-<!--
-Решение: перешли от аннотаций на контейнерах к лейблу на namespace. Один лейбл — `tags.vitech.team/service_name: my-cool-service` — и весь namespace собирается.
+`excluded_services` – наш список в Ansible для системных namespace. Vector-аннотации – для точечного исключения pod или контейнеров в нём.
 
+<!--
 Собираем всё, но с исключениями. Два уровня:
 1. Наш список `excluded_services` в Ansible — для системных namespace, где логи не нужны.
 2. Встроенные в Vector аннотации для точечного исключения: `vector.dev/exclude: "true"` исключает весь pod, `vector.dev/exclude-containers: "container1,container2"` исключает конкретные контейнеры в поде.
@@ -256,9 +264,13 @@ vector.dev/exclude-containers: "container1,container2"
 
 На агрегаторе читаем лейбл с namespace:
 
-```toml
-ServiceName = strip_whitespace(
-  to_string!(del(.kubernetes.pod_annotations."tags.vitech.team/service_name"))
+```rust
+ServiceName = strip_whitespace( 
+  to_string!( 
+    del( 
+      .kubernetes.pod_annotations."tags.vitech.team/service_name" 
+    ) 
+  ) 
 )
 ```
 
@@ -337,7 +349,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 **Конкретный пример:** сервис `bff` пишет 6.39 MiB/s, при баге – до 20 MiB/s. Диск 50 ГБ в Dev заполняется за 2 часа.
 
-Что хуже: потеря событий и заполнение диска на 100% удалёнными файловыми дескрипторами (handle leaks), которые удерживает процесс.
+Хуже всего – Vector держит открытые дескрипторы на удалённых файлах. Диск забит, inodes кончились, нода падает.
 
 <!--
 Сценарий: разработчик добавил лишний лог в цикле. Сервис начинает писать 10–30 КБ/сек, файл лога ротируется быстрее, чем Vector успевает его дочитать. Vector теряет события, а хуже — оставляет висящие файловые дескрипторы на удалённых (ротированных) файлах.
@@ -353,11 +365,17 @@ LLM знает `source = kubernetes_logs`, но не знает, что реал
 
 # Ловушка №2: наш путь
 
-- Явная настройка `max_line_bytes` и `data_dir` для состояния
-- Включение `buffer.type = "disk"`
-- Троттлинг на уровне ноды для защиты агрегатора от всплесков
+Разрешить агентам vector чтение не с самого старого файла логов и чтение файлов блоками:
 
-Троттлинг применяется на агентах (не агрегаторах). Dev: 129000 evt/min:
+```yaml
+sources:
+  kubernetes_logs:
+    type: kubernetes_logs
+    oldest_first: false
+    max_read_bytes: 16384
+```
+
+Троттлинг на уровне ноды для защиты агрегатора от всплесков. Применяется на агентах (не агрегаторах). Dev: 129000 evt/min:
 
 ```toml
 key_field = "{{.kubernetes.pod_namespace}}"
@@ -367,10 +385,9 @@ window_secs = 1
 
 <!--
 Решение многослойное:
-1. Явно настраиваем `max_line_bytes` — чтобы один аномально длинный лог не убил пайплайн.
-2. `data_dir` вынесен на отдельный том с мониторингом.
-3. `buffer.type = "disk"` — чтобы при всплесках агент не терял события, а буферизировал на диск.
-4. Троттлинг на уровне ноды — защита агрегатора от всплесков с конкретных namespace.
+1. `oldest_first: false` — агент читает свежие логи первыми, не застревая на старых.
+2. `max_read_bytes: 16384` — читаем блоками по 16KB, не держим fd долго.
+3. Троттлинг на уровне ноды — защита агрегатора от всплесков с конкретных namespace.
 
 Троттлинг применяем на агентах, не на агрегаторах — иначе один шумный namespace забивает агрегатор всем остальным. Dev: `threshold = 2150` при `window_secs = 1` — это ~129000 событий в минуту. Жёстко, но Dev можно терять.
 -->
