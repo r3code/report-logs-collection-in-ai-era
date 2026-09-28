@@ -10,14 +10,16 @@ fonts:
 layout: cover
 ---
 
-# Сбор логов на vector и clickhouse<br>– то, что ИИ за тебя не сделал бы
+<div class="absolute right-0 top-0 bottom-0 w-1/2 h-full">
+  <img src="/images/bg-slide-1.png" class="w-full h-full object-cover" alt="Фон презентации">
+</div>
+
+<div class="relative z-10 w-1/2 pr-8">
+# Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы
 
 <p class="speaker-name">Дмитрий Синявский</p>
 <p class="speaker-role">Инженер по надёжности (SRE)</p>
 <p class="speaker-company">Ви.Tech</p>
-
-<div class="absolute right-0 bottom-0 w-1/2 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [ИЗОБРАЖЕНИЕ: прижато вправо-вниз, занимает половину слайда, не перекрывает текст слева.<br>Тематическая картинка или схема стека Vector → ClickHouse]
 </div>
 
 <!--
@@ -100,14 +102,14 @@ layout: cover
 
 ---
 
-# Обо мне
-
-<div class="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center">
-  [ИЗОБРАЖЕНИЕ: «молния» ⚡<br>вплотную к левому и нижнему краю]
+<div class="absolute left-0 top-0 bottom-0 w-1/3 h-full">
+  <img src="/images/speaker-photo.jpg" class="w-full h-full object-cover" alt="Фото спикера">
 </div>
 
-<div class="absolute right-10 top-20 w-1/2 grid grid-cols-2 gap-6">
+<div class="absolute right-0 top-0 bottom-0 w-2/3 h-full flex flex-col justify-center px-12">
+# Обо мне
 
+<div class="grid grid-cols-2 gap-6 mt-8">
 <div class="text-center">
   <p class="text-5xl font-bold text-black">20+ ⚡</p>
   <p class="text-black">лет в IT</p>
@@ -127,12 +129,7 @@ layout: cover
   <p class="text-5xl font-bold text-black">5+</p>
   <p class="text-black">лет в SRE</p>
 </div>
-
 </div>
-
-<div class="absolute right-10 bottom-10 text-right">
-<p class="text-black">Дмитрий Синявский</p>
-<p class="text-black">Инженер по надёжности (SRE), Ви.Tech</p>
 </div>
 
 <!--
@@ -271,10 +268,6 @@ ServiceName = strip_whitespace(
 | Строк в конфигах | 2–40 → 2 |
 | Валидация конфигов (тесты Vector) | 15 минут → 4 минуты |
 
-<div class="absolute right-10 bottom-10 w-1/4 h-1/4 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [СКРИНШОТ: «стена» из 10 аннотаций в одном деплойменте vs один лейбл на namespace]
-</div>
-
 <!--
 На агрегаторе VRL-трансформ читает лейбл с namespace и кладёт в поле `ServiceName`. Всё — дальше логи идут в ClickHouse с правильным именем сервиса.
 
@@ -284,6 +277,36 @@ ServiceName = strip_whitespace(
 - Валидация конфигов: было 15 минут последовательно, стало 4 минуты параллельно на 5 средах в GitLab CI.
 
 Это не магия Vector — это правильный уровень абстракции. LLM предложил бы вам аннотации, потому что они «явные и декларативные». Но он не знает, что на 200 сервисов явность становится болью.
+-->
+
+---
+
+# Ловушка №1: «стена» аннотаций
+
+Как выглядел один деплоймент с 10 контейнерами – в каждый надо прописать аннотацию:
+
+```yaml
+metadata:
+  annotations:
+    logging.vitech.team/srv1.unified_log_model: "true"
+    logging.vitech.team/srv2.unified_log_model: "true"
+    logging.vitech.team/srv3.unified_log_model: "true"
+    # ... и так 10 раз
+    logging.vitech.team/srv10.unified_log_model: "true"
+```
+
+Теперь – один лейбл на namespace:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    tags.vitech.team/service_name: my-cool-service
+```
+
+<!--
+Слайд-сравнение: как было и как стало. Слева – «стена» из 10 аннотаций в одном деплойменте, которые ещё и могут не примениться из-за лимита 63 символа. Справа – один лейбл на namespace, который покрывает весь namespace сразу.
 -->
 
 ---
@@ -332,10 +355,6 @@ threshold = 2150
 window_secs = 1
 ```
 
-<div class="absolute right-10 bottom-10 w-1/4 h-1/4 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [СКРИНШОТ: график заполнения диска в / и вывод lsof с висящими fd]
-</div>
-
 <!--
 Решение многослойное:
 1. Явно настраиваем `max_line_bytes` — чтобы один аномально длинный лог не убил пайплайн.
@@ -344,6 +363,28 @@ window_secs = 1
 4. Троттлинг на уровне ноды — защита агрегатора от всплесков с конкретных namespace.
 
 Троттлинг применяем на агентах, не на агрегаторах — иначе один шумный namespace забивает агрегатор всем остальным. Dev: `threshold = 2150` при `window_secs = 1` — это ~129000 событий в минуту. Жёстко, но Dev можно терять.
+-->
+
+---
+
+# Ловушка №2: lsof при инциденте
+
+Что показывал `lsof` на ноде, у которой диск был заполнен на 100%:
+
+```text
+COMMAND   PID  USER   FD   TYPE  SIZE   NODE NAME
+vector   1234 root   45r  REG   1073741824 12345 /var/log/app/app.log.1 (deleted)
+vector   1234 root   46r  REG   1073741824 12346 /var/log/app/app.log.2 (deleted)
+vector   1234 root   47r  REG   1073741824 12347 /var/log/app/app.log.3 (deleted)
+vector   1234 root   48r  REG   1073741824 12348 /var/log/app/app.log.4 (deleted)
+vector   1234 root   49r  REG   1073741824 12349 /var/log/app/app.log.5 (deleted)
+# ... сотни таких дескрипторов
+```
+
+Файлы удалены (rotated), но Vector держит файловые дескрипторы. Диск занят, inodes закончились.
+
+<!--
+Иллюстрация проблемы изнутри. lsof показывает сотни (deleted) дескрипторов. Файлы физически удалены при ротации, но процесс vector продолжает их держать открытыми — потому что не успел дочитать. Результат: диск формально свободен, но inodes кончились, новые файлы создать нельзя, нода падает.
 -->
 
 ---
@@ -448,33 +489,6 @@ SETTINGS index_granularity = 8192,
 -->
 
 ---
-
-# Тесты трансформов ULP
-
-Всего тестов в Unified Log Pipeline: **101 шт.**
-
-| `ulp_normalize_severity` | 31 |
-|---|---|
-| `ulp_message_processing` | 22 |
-| `ulp-log-all-metrics-collector` | 13 |
-| `ulp_prepare_ttl` | 7 |
-| `ulp-internal-metric_logs_total` | 4 |
-| `ulp-internal-metric_logs_size_bytes_total` | 4 |
-| `ulp-internal-metric_k8s_logs_total` | 3 |
-| `ulp_check_unix_timestamp` | 2 |
-| `ulp_log_metrics_exclude_filter` | 1 |
-
-Конфигурация для Vector и тесты генерируются Ansible, отдельный stage прогоняет job-ы с тестами для всех сред vector-агрегаторов в GitLab CI.
-
-<!--
-Все наши трансформы покрыты тестами — 101 шт. Распределение по трансформам видно на слайде. Самые тяжёлые — нормализация severity (31 тест, потому что много форматов: syslog, journald, application-specific) и обработка сообщений (22 теста).
-
-Тесты интегрированы в GitLab CI: отдельный stage генерирует конфиги через Ansible для каждой среды, потом гоняет тесты Vector. Время прогона — 4 минуты параллельно на 5 средах. Раньше было 15 минут последовательно.
-
-Это важно: LLM напишет вам конфиг, но не напишет тесты под ваши граничные случаи. Тесты — это и есть эмпирический опыт, формализованный в код.
--->
-
----
 class: bg-black text-white flex flex-col justify-center p-20
 ---
 
@@ -536,14 +550,26 @@ LLM напишет вам идеальный конфиг для вакуума,
 
 Эмпирическая боль – единственный учитель в инфраструктуре.
 
-Все наши наработки (схемы SQL, шаблоны Ansible, тесты) – в открытом доступе:
-
-github.com/vseinstrumentiru/unified-log-pipeline
-
 <!--
 Главный вывод: LLM — отличный напарник, но не замена инженерного опыта. Он напишет конфиг для вакуума. Не напишет тесты под ваши граничные случаи. Не предусмотрит лимиты K8s API. Не знает, какой сервис у вас начнёт гнать 20 МБ/с логов при баге.
+-->
 
-Все наши наработки — схемы SQL, шаблоны Ansible, 101 тест — в открытом доступе: github.com/vseinstrumentiru/unified-log-pipeline. Берите, форкайте, используйте.
+---
+
+# Все наши наработки – в открытом доступе
+
+<p class="text-black mb-6">Схемы SQL, шаблоны Ansible, тесты – в репозитории Unified Log Pipeline.</p>
+
+<div class="flex items-center justify-center gap-12">
+  <img src="/images/qr-repo.png" class="w-64 h-64" alt="QR-код на репозиторий">
+  <div>
+    <p class="text-black text-3xl font-bold">clck.ru/3WANAB</p>
+    <p class="text-black mt-4">Сфотографируйте QR-код<br>или перейдите по короткой ссылке</p>
+  </div>
+</div>
+
+<!--
+Все наши наработки — схемы SQL, шаблоны Ansible, 101 тест — в открытом доступе: github.com/vseinstrumentiru/unified-log-pipeline. Короткая ссылка для удобства — clck.ru/3WANAB. Берите, форкайте, используйте.
 -->
 
 ---
@@ -556,14 +582,16 @@ layout: end
 
 Канал: t.me/letitkit
 
-Репозиторий: github.com/vseinstrumentiru/unified-log-pipeline
-
-<div class="absolute right-10 bottom-10 w-1/4 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [QR-код: t.me/letitkit]
+<div class="flex items-center justify-center gap-12 mt-8">
+  <img src="/images/qr-tg.png" class="w-64 h-64" alt="QR-код на Telegram-канал">
+  <div>
+    <p class="text-black text-3xl font-bold">t.me/letitkit</p>
+    <p class="text-black mt-4">Сфотографируйте QR-код<br>или перейдите по ссылке</p>
+  </div>
 </div>
 
 <!--
 Спасибо за внимание. Вопросы?
 
-Канал t.me/letitkit — про SRE-практики, там же буду публиковать материалы доклада. Репозиторий Unified Log Pipeline — github.com/vseinstrumentiru/unified-log-pipeline, всё в открытом доступе.
+Канал t.me/letitkit — про SRE-практики, там же буду публиковать материалы доклада. Репозиторий Unified Log Pipeline — на предыдущем слайде.
 -->
