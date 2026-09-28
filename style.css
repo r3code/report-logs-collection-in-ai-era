@@ -6,22 +6,22 @@
  * ──────────────────────────────────────────────────────────────────────
  */
 
-/* ─── ЖЁСТКО: весь текст ЧЁРНЫЙ ──────────────────────────────────────── */
+/* ─── ЖЁСТКО: весь текст ЧЁРНЫЙ (КРОМЕ code-блоков — там подсветка shiki) ── */
 
 .slidev-layout,
-.slidev-layout *,
+.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout *::before,
 .slidev-layout *::after,
 .slidev-layout.prose,
-.slidev-layout.prose *,
+.slidev-layout.prose *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout.prose *::before,
 .slidev-layout.prose *::after,
 .slidev-page,
-.slidev-page *,
+.slidev-page *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-page *::before,
 .slidev-page *::after,
 .slidev-page-wrapper,
-.slidev-page-wrapper * {
+.slidev-page-wrapper *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
   color: #000 !important;
 }
 
@@ -45,7 +45,7 @@
   opacity: 1 !important;
 }
 
-/* Инлайн-код — чёрный на сером фоне, 18pt */
+/* Инлайн-код — чёрный на сером фоне, 16pt */
 .slidev-layout :not(pre) > code,
 .slidev-layout.prose :not(pre) > code {
   color: #000 !important;
@@ -56,25 +56,16 @@
   font-family: 'Fira Code', monospace !important;
 }
 
-/* Code-блоки сохраняют подсветку синтаксиса */
-.slidev-layout pre,
-.slidev-layout pre *,
-.slidev-layout pre code,
-.slidev-layout .shiki,
-.slidev-layout .shiki *,
-.slidev-layout .shiki span,
-.slidev-layout .slidev-code,
-.slidev-layout .slidev-code * {
-  color: revert !important;
-}
+/* Code-блоки: НЕ трогаем color — shiki сама ставит цвета через CSS-переменные */
+/* Убираем только background, padding, font-size, white-space */
 
-/* На слайдах-разделителях (bg-black) — белый текст */
+/* На слайдах-разделителях (bg-black) — белый текст (кроме code) */
 .slidev-layout.bg-black,
-.slidev-layout.bg-black *,
+.slidev-layout.bg-black *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout.bg-black *::before,
 .slidev-layout.bg-black *::after,
 .bg-black.slidev-layout,
-.bg-black.slidev-layout * {
+.bg-black.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
   color: #fff !important;
 }
 
