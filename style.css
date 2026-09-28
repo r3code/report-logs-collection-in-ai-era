@@ -1,15 +1,12 @@
-/* ─── Style Guide Дмитрия Синявского v4 ────────────────────────────────
- * Все тексты ЧЁРНЫЕ (#000)
- * Заголовки: Arial 32pt
- * Основной:  Arial 21pt, line-height 1.15
- * Код:       Fira Code 18pt, с переносом строк
+/* ─── Style Guide Дмитрия Синявского v6 ────────────────────────────────
+ * Заголовки:  Arial 32pt
+ * Основной:   Arial 21pt, line-height 1.3 (визуально как Google Slides 1.15)
+ * Код:        Fira Code 18pt (СТРОГО!)
+ * Буллеты:    heavy rounded arrow 14pt
  * ──────────────────────────────────────────────────────────────────────
  */
 
-/* ─── ЖЁСТКО: весь текст ЧЁРНЫЙ ────────────────────────────────────────
- * Используем :where() override и cascade layers для перебивания
- * Slidev default theme и prose классов
- */
+/* ─── ЖЁСТКО: весь текст ЧЁРНЫЙ ──────────────────────────────────────── */
 
 .slidev-layout,
 .slidev-layout *,
@@ -17,14 +14,38 @@
 .slidev-layout *::after,
 .slidev-layout.prose,
 .slidev-layout.prose *,
+.slidev-layout.prose *::before,
+.slidev-layout.prose *::after,
 .slidev-page,
 .slidev-page *,
+.slidev-page *::before,
+.slidev-page *::after,
 .slidev-page-wrapper,
 .slidev-page-wrapper * {
   color: #000 !important;
 }
 
-/* Инлайн-код — чёрный на сером фоне */
+/* Slidev default даёт первому параграфу .slidev-layout > p:first-child
+   класс opacity-70 или text-grey. Переопределяем жёстче. */
+.slidev-layout > p,
+.slidev-layout > p:first-child,
+.slidev-layout > p:first-of-type,
+.slidev-layout.prose > p,
+.slidev-layout.prose > p:first-child,
+.slidev-layout.prose > p:first-of-type,
+.slidev-layout p,
+.slidev-layout.prose p {
+  color: #000 !important;
+  opacity: 1 !important;
+}
+
+/* Дополнительно: любой элемент с opacity меньше 1 - поднимаем */
+.slidev-layout [class*="opacity"],
+.slidev-layout.prose [class*="opacity"] {
+  opacity: 1 !important;
+}
+
+/* Инлайн-код — чёрный на сером фоне, 18pt */
 .slidev-layout :not(pre) > code,
 .slidev-layout.prose :not(pre) > code {
   color: #000 !important;
@@ -32,9 +53,10 @@
   padding: 0.1em 0.35em !important;
   border-radius: 0.25em !important;
   font-size: 18pt !important;
+  font-family: 'Fira Code', monospace !important;
 }
 
-/* Code-блоки сохраняют подсветку синтаксиса (shiki) */
+/* Code-блоки сохраняют подсветку синтаксиса */
 .slidev-layout pre,
 .slidev-layout pre *,
 .slidev-layout pre code,
@@ -56,7 +78,7 @@
   color: #fff !important;
 }
 
-/* ─── Размеры шрифтов ────────────────────────────────────────────────── */
+/* ─── Размеры шрифтов + line-height 1.3 ──────────────────────────────── */
 
 .slidev-layout,
 .slidev-layout p,
@@ -66,21 +88,22 @@
 .slidev-layout.prose p,
 .slidev-layout.prose li,
 .slidev-layout.prose td,
-.slidev-layout.prose th {
+.slidev-layout.prose th,
+.slidev-layout.prose {
   font-size: 21pt !important;
-  line-height: 1.15 !important;
+  line-height: 1.3 !important;
   font-family: 'Arial', sans-serif !important;
 }
 
 .slidev-layout li,
 .slidev-layout.prose li {
-  margin-bottom: 0.4em !important;
+  margin-bottom: 0.5em !important;
 }
 
 .slidev-layout h1,
 .slidev-layout.prose h1 {
   font-size: 32pt !important;
-  line-height: 1.1 !important;
+  line-height: 1.15 !important;
   font-weight: 700 !important;
   font-family: 'Arial', sans-serif !important;
   margin-bottom: 0.5em !important;
@@ -89,7 +112,7 @@
 .slidev-layout h2,
 .slidev-layout.prose h2 {
   font-size: 28pt !important;
-  line-height: 1.1 !important;
+  line-height: 1.15 !important;
   font-weight: 700 !important;
   font-family: 'Arial', sans-serif !important;
   margin-bottom: 0.4em !important;
@@ -98,40 +121,102 @@
 .slidev-layout h3,
 .slidev-layout.prose h3 {
   font-size: 24pt !important;
-  line-height: 1.15 !important;
+  line-height: 1.2 !important;
   font-weight: 600 !important;
   font-family: 'Arial', sans-serif !important;
 }
 
-/* ─── Код: Fira Code 18pt + перенос строк ────────────────────────────── */
+/* ─── КОД: Fira Code 18pt (СТРОГО через multiple !important) ─────────── */
 
 .slidev-layout pre,
-.slidev-layout pre code,
-.slidev-layout .slidev-code {
+.slidev-layout .slidev-code,
+.slidev-layout .shiki,
+.slidev-layout.prose pre,
+.slidev-layout.prose .slidev-code,
+.slidev-layout.prose .shiki {
   font-family: 'Fira Code', monospace !important;
   font-size: 18pt !important;
-  line-height: 1.25 !important;
+  line-height: 1.3 !important;
   white-space: pre-wrap !important;
   word-break: break-word !important;
   overflow-wrap: break-word !important;
-}
-
-.slidev-layout pre {
   background: #f3f4f6 !important;
   padding: 0.75em 1em !important;
   border-radius: 0.5em !important;
-  font-size: 18pt !important;
-  overflow-x: visible !important;
 }
 
-.slidev-layout pre code {
+.slidev-layout pre code,
+.slidev-layout .slidev-code code,
+.slidev-layout .shiki code,
+.slidev-layout .shiki span,
+.slidev-layout.prose pre code,
+.slidev-layout.prose .slidev-code code,
+.slidev-layout.prose .shiki code,
+.slidev-layout.prose .shiki span {
+  font-family: 'Fira Code', monospace !important;
+  font-size: 18pt !important;
+  line-height: 1.3 !important;
   background: transparent !important;
   padding: 0 !important;
   white-space: pre-wrap !important;
   word-break: break-word !important;
 }
 
-/* ─── Progressive Disclosure ──────────────────────────────────────────── */
+/* Дополнительно: переопределяем Slidev-code-token (для shiki) */
+.slidev-layout .slidev-code *,
+.slidev-layout pre[class*="language-"] *,
+.slidev-layout code[class*="language-"] * {
+  font-size: 18pt !important;
+}
+
+/* ─── Progressive Disclosure: списки через ul/li ────────────────────────
+ * Используем <ul class="progressive"> с <li> внутри.
+ * Активный пункт: data-active → символ ➔ (heavy rounded arrow)
+ * Пройденный пункт: по умолчанию → символ •
+ * Размер символа 14pt чтобы визуально не двигал строку
+ */
+
+.slidev-layout ul.progressive,
+.slidev-layout.prose ul.progressive {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.slidev-layout ul.progressive li,
+.slidev-layout.prose ul.progressive li {
+  list-style: none !important;
+  padding-left: 1.8em !important;
+  position: relative !important;
+  margin-bottom: 0.5em !important;
+  color: #000 !important;
+  font-size: 21pt !important;
+  line-height: 1.3 !important;
+}
+
+/* Пройденный пункт: • (кружок) */
+.slidev-layout ul.progressive li::before {
+  content: '•' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  font-size: 14pt !important;
+  color: #000 !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+}
+
+/* Активный пункт: ➔ (heavy rounded arrow) + bold */
+.slidev-layout ul.progressive li.active::before {
+  content: '➔' !important;
+  font-size: 14pt !important;
+  font-weight: 700 !important;
+}
+
+.slidev-layout ul.progressive li.active {
+  font-weight: 700 !important;
+}
+
 .slidev-layout .text-black { color: #000 !important; }
 .slidev-layout .font-bold { font-weight: 700 !important; }
 
@@ -174,6 +259,7 @@
 .slidev-layout.cover h1 {
   font-size: 32pt !important;
   font-weight: 700 !important;
+  line-height: 1.15 !important;
 }
 .slidev-layout.cover .speaker-name {
   font-weight: 700 !important;
@@ -186,7 +272,7 @@
   font-size: 21pt !important;
 }
 
-/* ─── Номер слайда (через global-top.vue) ────────────────────────────── */
+/* ─── Номер слайда (через layouts/default.vue) ────────────────────────── */
 .slide-number {
   position: absolute !important;
   top: 1rem !important;

@@ -10,11 +10,15 @@ fonts:
 layout: cover
 ---
 
-# Сбор логов на vector и clickhouse – то, что ИИ за тебя не сделал бы
+# Сбор логов на vector и clickhouse<br>– то, что ИИ за тебя не сделал бы
 
 <p class="speaker-name">Дмитрий Синявский</p>
 <p class="speaker-role">Инженер по надёжности (SRE)</p>
 <p class="speaker-company">Ви.Tech</p>
+
+<div class="absolute right-0 bottom-0 w-1/2 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
+  [ИЗОБРАЖЕНИЕ: прижато вправо-вниз, занимает половину слайда, не перекрывает текст слева.<br>Тематическая картинка или схема стека Vector → ClickHouse]
+</div>
 
 <!--
 Открываю доклад. 35 минут поговорим про то, что ИИ не скажет вам про сбор логов на Vector и ClickHouse. Это не введение в инструмент, это эмпирические ловушки, которые я выстрадал в продакшене Ви.Tech. Аудитория — Middle+ DevOps/SRE, которые уже масштабировали инфраструктуру.
@@ -23,46 +27,12 @@ layout: cover
 -->
 
 ---
-clicks: 6
----
 
 # О чем поговорим
 
-<div v-if="$clicks === 0" class="text-black">
-<p class="text-black font-bold mb-6">➔ Иллюзия «готового решения»</p>
-</div>
-
-<div v-if="$clicks === 1" class="text-black">
-<p class="text-black font-bold mb-6">➔ Иллюзия «готового решения»</p>
-
-</div>
-
-<div v-if="$clicks === 2" class="text-black">
-<p class="text-black mb-6">• Иллюзия «готового решения»</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №1: масштабирование управления</p>
-
-</div>
-
-<div v-if="$clicks === 3" class="text-black">
-<p class="text-black mb-6">• Иллюзия «готового решения»</p>
-<p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №2: инфраструктурные ограничения</p>
-</div>
-
-<div v-if="$clicks === 4" class="text-black">
-<p class="text-black mb-6">• Иллюзия «готового решения»</p>
-<p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
-<p class="text-black mb-6">• Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black font-bold mb-6">➔ Ловушка №3: хранение как политика данных</p>
-</div>
-
-<div v-if="$clicks >= 5" class="text-black">
-<p class="text-black mb-6">• Иллюзия «готового решения»</p>
-<p class="text-black mb-6">• Ловушка №1: масштабирование управления</p>
-<p class="text-black mb-6">• Ловушка №2: инфраструктурные ограничения</p>
-<p class="text-black mb-6">• Ловушка №3: хранение как политика данных</p>
-<p class="text-black font-bold mb-6">➔ Итоги – 3 принципа</p>
-</div>
+<ul class="progressive">
+  <li class="active">Иллюзия «готового решения»</li>
+</ul>
 
 <!--
 Сразу анонсирую структуру: сначала иллюзия, которую создаёт LLM при запросе «собери мне логи». Потом три ловушки — каждая из реальной практики. В конце — три принципа, которые мы вывели и внедрили в Unified Log Pipeline.
@@ -72,40 +42,101 @@ clicks: 6
 
 ---
 
+# О чем поговорим
+
+<ul class="progressive">
+  <li>Иллюзия «готового решения»</li>
+  <li class="active">Ловушка №1: масштабирование управления</li>
+</ul>
+
+<!--
+Второй слайд оглавления. Первый пункт уже прошли, второй — активный.
+-->
+
+---
+
+# О чем поговорим
+
+<ul class="progressive">
+  <li>Иллюзия «готового решения»</li>
+  <li>Ловушка №1: масштабирование управления</li>
+  <li class="active">Ловушка №2: инфраструктурные ограничения</li>
+</ul>
+
+<!--
+Третий слайд оглавления.
+-->
+
+---
+
+# О чем поговорим
+
+<ul class="progressive">
+  <li>Иллюзия «готового решения»</li>
+  <li>Ловушка №1: масштабирование управления</li>
+  <li>Ловушка №2: инфраструктурные ограничения</li>
+  <li class="active">Ловушка №3: хранение как политика данных</li>
+</ul>
+
+<!--
+Четвёртый слайд оглавления.
+-->
+
+---
+
+# О чем поговорим
+
+<ul class="progressive">
+  <li>Иллюзия «готового решения»</li>
+  <li>Ловушка №1: масштабирование управления</li>
+  <li>Ловушка №2: инфраструктурные ограничения</li>
+  <li>Ловушка №3: хранение как политика данных</li>
+  <li class="active">Итоги – 3 принципа</li>
+</ul>
+
+<!--
+Финальный слайд оглавления. Дальше переходим к иллюзии «готового решения».
+-->
+
+---
+
 # Обо мне
 
-<div class="absolute left-10 top-1/4 w-1/3 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
-  [ИЗОБРАЖЕНИЕ: «молния» ⚡ – иконка рядом с цифрой 20]
+<div class="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center">
+  [ИЗОБРАЖЕНИЕ: «молния» ⚡<br>вплотную к левому и нижнему краю]
 </div>
 
-<div class="absolute right-10 top-1/4 w-1/2 grid grid-cols-2 gap-4">
+<div class="absolute right-10 top-20 w-1/2 grid grid-cols-2 gap-6">
 
 <div class="text-center">
-  <p class="text-5xl font-bold text-black">20 ⚡</p>
+  <p class="text-5xl font-bold text-black">20+ ⚡</p>
   <p class="text-black">лет в IT</p>
 </div>
 
 <div class="text-center">
-  <p class="text-5xl font-bold text-black">9</p>
-  <p class="text-black">лет в разработке</p>
+  <p class="text-5xl font-bold text-black">6+</p>
+  <p class="text-black">лет руководства разработкой</p>
 </div>
 
 <div class="text-center">
-  <p class="text-5xl font-bold text-black">6</p>
-  <p class="text-black">лет руководил разработкой</p>
+  <p class="text-5xl font-bold text-black">5+</p>
+  <p class="text-black">лет в backend-разработке</p>
 </div>
 
 <div class="text-center">
-  <p class="text-5xl font-bold text-black">5</p>
+  <p class="text-5xl font-bold text-black">5+</p>
   <p class="text-black">лет в SRE</p>
 </div>
 
 </div>
 
-Дмитрий Синявский, инженер по надёжности (SRE), Ви.Tech
+<div class="absolute right-10 bottom-10 text-right">
+<p class="text-black">Дмитрий Синявский</p>
+<p class="text-black">Инженер по надёжности (SRE), Ви.Tech</p>
+</div>
 
 <!--
-Краткое обо мне. 20 лет в IT — начинал разработчиком, потом руководил разработкой 6 лет, последние 5 лет работаю SRE. В Ви.Tech (раньше vi.tech) отвечаю за наблюдаемость (observability) — логи, метрики, трейсы. Именно в этой роли и столкнулся со всеми ловушками, о которых буду говорить.
+Краткое обо мне. 20+ лет в IT — начинал backend-разработчиком, потом 6 лет руководил разработкой, последние 5 лет работаю SRE. В Ви.Tech (раньше vi.tech) отвечаю за наблюдаемость (observability) — логи, метрики, трейсы. Именно в этой роли и столкнулся со всеми ловушками, о которых буду говорить.
 
 Канал letitkit веду про SRE-практики, allslo_ru — про SLO и метрики. На финальном слайде будут ссылки.
 -->
@@ -126,11 +157,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 Спросите GPT/Claude: «Как собрать логи из K8s используя Vector.dev в ClickHouse?»
 
-<v-click>
-
 Он выдаст идеальный конфиг Vector. Запустите его – и всё заработает. Но только до первого масштабирования.
-
-</v-click>
 
 <div class="absolute right-10 bottom-10 w-1/3 h-1/3 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
   [СКРИНШОТ: идеальный ответ Claude рядом с графиком реального инцидента]
@@ -148,9 +175,8 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 # Масштаб системы
 
-| Параметр | Значение |
-|----------|----------|
 | Сервисов в продакшене | 200 |
+|---|---|
 | Объём логов | 3.6–3.8 ТБ/день, 66 MiB/s |
 | Событий в секунду | 100–130K |
 | Vector-агентов в K8s | 764 (4 кластера) |
@@ -185,17 +211,9 @@ class: bg-black text-white flex flex-col justify-center p-20
 logging.vitech.team/<container.name>.unified_log_model: "true"
 ```
 
-<v-click>
-
 Если ключ аннотации (то, что слева от двоеточия) больше 63 символов, аннотация не применится. Это зависит от длины имени контейнера, а не от их количества.
 
-</v-click>
-
-<v-click>
-
 Когда контейнеров много, приходилось в каждый писать аннотацию. При изменениях и добавлениях – не забывать дописать.
-
-</v-click>
 
 <!--
 История: мы начали с аннотаций на контейнерах. Идея казалась красивой — каждый под объявляет, какие логи и как собирать. На практике: лимит K8s API — 63 символа на ключ аннотации. Если имя контейнера длинное, ключ `logging.vitech.team/<container.name>.unified_log_model` превышает лимит, и аннотация молча игнорируется.
@@ -211,17 +229,11 @@ LLM здесь молчит, потому что он знает синтакс�
 
 Отказались от настройки на контейнер в пользу централизованного управления.
 
-<v-click>
-
 Лейбл на namespace вместо аннотаций на контейнерах:
 
 ```yaml
 tags.vitech.team/service_name: my-cool-service
 ```
-
-</v-click>
-
-<v-click>
 
 Собираем всё, но с исключениями. Кроме наших настроек с `excluded_services`, есть встроенные в Vector аннотации:
 
@@ -229,8 +241,6 @@ tags.vitech.team/service_name: my-cool-service
 vector.dev/exclude: "true"
 vector.dev/exclude-containers: "container1,container2"
 ```
-
-</v-click>
 
 <!--
 Решение: перешли от аннотаций на контейнерах к лейблу на namespace. Один лейбл — `tags.vitech.team/service_name: my-cool-service` — и весь namespace собирается.
@@ -254,17 +264,12 @@ ServiceName = strip_whitespace(
 )
 ```
 
-<v-click>
-
 **Экономия времени:**
 
-| Метрика | Было | Стало |
-|---------|------|-------|
-| Подключение нового сервиса | 5–8 часов | 10 минут |
-| Строк в конфигах | 2–40 | 2 |
-| Валидация конфигов (тесты Vector) | 15 минут | 4 минуты (параллельно на 5 сред) |
-
-</v-click>
+| Подключение нового сервиса | 5–8 часов → 10 минут |
+|---|---|
+| Строк в конфигах | 2–40 → 2 |
+| Валидация конфигов (тесты Vector) | 15 минут → 4 минуты |
 
 <div class="absolute right-10 bottom-10 w-1/4 h-1/4 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
   [СКРИНШОТ: «стена» из 10 аннотаций в одном деплойменте vs один лейбл на namespace]
@@ -297,17 +302,9 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 Сервис в Dev начинает писать 10–30 КБ/сек, файл лога ротируется быстрее, чем Vector успевает его вычитать.
 
-<v-click>
-
 **Конкретный пример:** сервис `bff` пишет 6.39 MiB/s, при баге – до 20 MiB/s. Диск 50 ГБ в Dev заполняется за 2 часа.
 
-</v-click>
-
-<v-click>
-
 Что хуже: потеря событий и заполнение диска на 100% удалёнными файловыми дескрипторами (handle leaks), которые удерживает процесс.
-
-</v-click>
 
 <!--
 Сценарий: разработчик добавил лишний лог в цикле. Сервис начинает писать 10–30 КБ/сек, файл лога ротируется быстрее, чем Vector успевает его дочитать. Vector теряет события, а хуже — оставляет висящие файловые дескрипторы на удалённых (ротированных) файлах.
@@ -323,33 +320,17 @@ LLM знает `source = kubernetes_logs`, но не знает, что реал
 
 # Ловушка №2: наш путь
 
-<v-click>
-
 - Явная настройка `max_line_bytes` и `data_dir` для состояния
 - Включение `buffer.type = "disk"`
 - Троттлинг на уровне ноды для защиты агрегатора от всплесков
 
-</v-click>
-
-<v-click>
-
-Троттлинг применяется на агентах (не агрегаторах):
+Троттлинг применяется на агентах (не агрегаторах). Dev: 129000 evt/min:
 
 ```toml
-# Dev: 129000 evt/min
 key_field = "{{.kubernetes.pod_namespace}}"
 threshold = 2150
 window_secs = 1
 ```
-
-```toml
-# Prod
-key_field = "{{.kubernetes.pod_namespace}}"
-threshold = 600
-window_secs = 60
-```
-
-</v-click>
 
 <div class="absolute right-10 bottom-10 w-1/4 h-1/4 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
   [СКРИНШОТ: график заполнения диска в / и вывод lsof с висящими fd]
@@ -362,9 +343,27 @@ window_secs = 60
 3. `buffer.type = "disk"` — чтобы при всплесках агент не терял события, а буферизировал на диск.
 4. Троттлинг на уровне ноды — защита агрегатора от всплесков с конкретных namespace.
 
-Троттлинг применяем на агентах, не на агрегаторах — иначе один шумный namespace забивает агрегатор всем остальным. Конфиги разные для Dev и Prod:
-- Dev: `threshold = 2150` при `window_secs = 1` — это ~129000 событий в минуту. Жёстко, но Dev можно терять.
-- Prod: `threshold = 600` при `window_secs = 60` — мягче, но на минутном окне. В проде терять логи нельзя, поэтому троттлинг включается только при реальных аномалиях.
+Троттлинг применяем на агентах, не на агрегаторах — иначе один шумный namespace забивает агрегатор всем остальным. Dev: `threshold = 2150` при `window_secs = 1` — это ~129000 событий в минуту. Жёстко, но Dev можно терять.
+-->
+
+---
+
+# Ловушка №2: троттлинг в Prod
+
+В Prod троттлинг мягче, на минутном окне – терять логи нельзя:
+
+```toml
+key_field = "{{.kubernetes.pod_namespace}}"
+threshold = 600
+window_secs = 60
+```
+
+В проде троттлинг включается только при реальных аномалиях. Если шумный сервис уходит за 600 evt/sec на namespace – логи начинают теряться, но агрегатор остаётся жив.
+
+<!--
+В Prod: `threshold = 600` при `window_secs = 60` — мягче, но на минутном окне. В проде терять логи нельзя, поэтому троттлинг включается только при реальных аномалиях.
+
+Кейс: когда `bff` начал гнать 20 MiB/s, троттлинг в Dev сработал за секунду, в Prod — через минуту. В обоих случаях агрегатор выжил, остальной трафик не пострадал.
 -->
 
 ---
@@ -386,23 +385,11 @@ class: bg-black text-white flex flex-col justify-center p-20
 - 30 дней для платёжных логов
 - 3 дня для Dev-окружения
 
-<v-click>
-
 Системы вроде VictoriaLogs не дают такой гибкости на уровне записей.
-
-</v-click>
-
-<v-click>
 
 Создание отдельных таблиц под каждый сервис приводит к дублированию схемы и усложнению запросов.
 
-</v-click>
-
-<v-click>
-
 LLM знает синтаксис TTL, но не знает ваших бизнес-требований к хранению.
-
-</v-click>
 
 <!--
 Сценарий: платёжные логи по регулятору нужно хранить 30 дней. Dev-логи — 3 дня, они не нужны. Промежуточные значения — 7, 14 дней. Если создать отдельную таблицу под каждый TTL — получим зоопарк схем, дублирование DDL, и невозможность join'ить логи разных сервисов.
@@ -414,16 +401,30 @@ LLM здесь молчит, потому что он знает синтакс�
 
 ---
 
-# Ловушка №3: схема ClickHouse
+# Ловушка №3: схема ClickHouse (1/2)
 
 Единая таблица `logs_local` (ReplicatedMergeTree) с динамическим TTL:
 
 ```sql
 `TTL` UInt16 DEFAULT 7
-  COMMENT 'Срок хранения записи лога в таблице в сутках',
+  COMMENT 'Срок хранения записи лога в сутках',
 
 TTL toDateTime(ObservedTimestamp) + toIntervalDay(TTL)
+...
+```
 
+<!--
+Схема: одна таблица `logs_local` на каждом узле кластера ClickHouse. Поверх — распределённая таблица `logs` для запросов.
+
+Фокус — колонка `TTL UInt16 DEFAULT 7`. Каждая запись несёт свой срок хранения. TTL вычисляется динамически: `toDateTime(ObservedTimestamp) + toIntervalDay(TTL)`. Платёжный лог — `TTL = 30`, Dev-лог — `TTL = 3`. Одна таблица, одна схема, разные сроки.
+-->
+
+---
+
+# Ловушка №3: схема ClickHouse (2/2)
+
+```sql
+...
 INDEX idx_ServiceName_ObservedTimestamp
   (ServiceName, ObservedTimestamp) TYPE minmax
   GRANULARITY 8192
@@ -432,21 +433,13 @@ SETTINGS index_granularity = 8192,
          ttl_only_drop_parts = 0;
 ```
 
-<v-click>
-
 Ключевые решения:
 
 - `logs_local` (ReplicatedMergeTree) на каждом узле + `logs` (Distributed) поверх
 - Динамический TTL через колонку `TTL UInt16` – не фиксированный для всей таблицы
 - Сжатие `ZSTD(1)` – баланс CPU/место
 
-</v-click>
-
 <!--
-Схема: одна таблица `logs_local` на каждом узле кластера ClickHouse. Поверх — распределённая таблица `logs` для запросов.
-
-Фокус — колонка `TTL UInt16 DEFAULT 7`. Каждая запись несёт свой срок хранения. TTL вычисляется динамически: `toDateTime(ObservedTimestamp) + toIntervalDay(TTL)`. Платёжный лог — `TTL = 30`, Dev-лог — `TTL = 3`. Одна таблица, одна схема, разные сроки.
-
 Индекс `idx_ServiceName_ObservedTimestamp TYPE minmax` — ускоряет фильтрацию по сервису. Это самый частый паттерн запроса: «дай логи сервиса X за последний час».
 
 `ttl_only_drop_parts = 0` — позволяем ClickHouse удалять части с истёкшим TTL, не дожидаясь полного парта. Чуть больше нагрузки на merge, но TTL срабатывает точнее.
@@ -460,11 +453,8 @@ SETTINGS index_granularity = 8192,
 
 Всего тестов в Unified Log Pipeline: **101 шт.**
 
-<v-click>
-
-| Трансформ | Тестов |
-|-----------|--------|
 | `ulp_normalize_severity` | 31 |
+|---|---|
 | `ulp_message_processing` | 22 |
 | `ulp-log-all-metrics-collector` | 13 |
 | `ulp_prepare_ttl` | 7 |
@@ -474,13 +464,7 @@ SETTINGS index_granularity = 8192,
 | `ulp_check_unix_timestamp` | 2 |
 | `ulp_log_metrics_exclude_filter` | 1 |
 
-</v-click>
-
-<v-click>
-
 Конфигурация для Vector и тесты генерируются Ansible, отдельный stage прогоняет job-ы с тестами для всех сред vector-агрегаторов в GitLab CI.
-
-</v-click>
 
 <!--
 Все наши трансформы покрыты тестами — 101 шт. Распределение по трансформам видно на слайде. Самые тяжёлые — нормализация severity (31 тест, потому что много форматов: syslog, journald, application-specific) и обработка сообщений (22 теста).
@@ -501,34 +485,44 @@ class: bg-black text-white flex flex-col justify-center p-20
 -->
 
 ---
-clicks: 3
+
+# Итоги – 3 принципа
+
+<ul class="progressive">
+  <li class="active">1. Децентрализация конфигурации – зло</li>
+  <li>2. Логи – это нагрузка на систему</li>
+  <li>3. Хранение должно быть гибким</li>
+</ul>
+
+<!--
+Принцип 1: децентрализация конфигурации — зло. Переносим управление сбором с аннотаций контейнеров (где есть лимиты K8s API) на лейблы namespace и централизованные Jinja-шаблоны Ansible с управлением исключениями. Собирай всё — исключай лишнее.
+-->
+
 ---
 
 # Итоги – 3 принципа
 
-<div v-if="$clicks === 0">
-<p class="text-black font-bold mb-6">➔ 1. Децентрализация конфигурации – зло</p>
-<p class="text-black mb-6">• 2. Логи – это нагрузка на систему</p>
-<p class="text-black mb-6">• 3. Хранение должно быть гибким</p>
-</div>
-
-<div v-if="$clicks === 1">
-<p class="text-black mb-6">• 1. Децентрализация конфигурации – зло</p>
-<p class="text-black font-bold mb-6">➔ 2. Логи – это нагрузка на систему</p>
-<p class="text-black mb-6">• 3. Хранение должно быть гибким</p>
-</div>
-
-<div v-if="$clicks >= 2">
-<p class="text-black mb-6">• 1. Децентрализация конфигурации – зло</p>
-<p class="text-black mb-6">• 2. Логи – это нагрузка на систему</p>
-<p class="text-black font-bold mb-6">➔ 3. Хранение должно быть гибким</p>
-</div>
+<ul class="progressive">
+  <li>1. Децентрализация конфигурации – зло</li>
+  <li class="active">2. Логи – это нагрузка на систему</li>
+  <li>3. Хранение должно быть гибким</li>
+</ul>
 
 <!--
-Принцип 1: децентрализация конфигурации — зло. Переносим управление сбором с аннотаций контейнеров (где есть лимиты K8s API) на лейблы namespace и централизованные Jinja-шаблоны Ansible с управлением исключениями. Собирай всё — исключай лишнее.
-
 Принцип 2: логи — это не просто текст, это нагрузка на систему. Vector по умолчанию не спасёт от «шумных соседей». Всегда явно настраивайте disk buffer, data_dir и троттлинг.
+-->
 
+---
+
+# Итоги – 3 принципа
+
+<ul class="progressive">
+  <li>1. Децентрализация конфигурации – зло</li>
+  <li>2. Логи – это нагрузка на систему</li>
+  <li class="active">3. Хранение должно быть гибким</li>
+</ul>
+
+<!--
 Принцип 3: хранение должно быть гибким. Единая таблица с динамическим TTL на уровне записи выигрывает у зоопарка таблиц или жестких ограничений альтернативных систем.
 -->
 
@@ -536,31 +530,15 @@ clicks: 3
 
 # Главный вывод
 
-<v-click>
-
 <p class="text-black text-3xl font-bold mb-6">Не верьте ИИ на слово.</p>
-
-</v-click>
-
-<v-click>
 
 LLM напишет вам идеальный конфиг для вакуума, но не напишет тесты под ваши граничные случаи и не предусмотрит лимиты API.
 
-</v-click>
-
-<v-click>
-
 Эмпирическая боль – единственный учитель в инфраструктуре.
-
-</v-click>
-
-<v-click>
 
 Все наши наработки (схемы SQL, шаблоны Ansible, тесты) – в открытом доступе:
 
 github.com/vseinstrumentiru/unified-log-pipeline
-
-</v-click>
 
 <!--
 Главный вывод: LLM — отличный напарник, но не замена инженерного опыта. Он напишет конфиг для вакуума. Не напишет тесты под ваши граничные случаи. Не предусмотрит лимиты K8s API. Не знает, какой сервис у вас начнёт гнать 20 МБ/с логов при баге.
@@ -572,7 +550,7 @@ github.com/vseinstrumentiru/unified-log-pipeline
 layout: end
 ---
 
-# Спасибо
+# Время задавать вопросы! Спрашиваете.
 
 <p class="speaker-name">Дмитрий Синявский</p>
 
