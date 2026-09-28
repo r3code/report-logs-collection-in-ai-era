@@ -58,9 +58,11 @@ if (!fmMatch) {
   }
 }
 
-// ─── 2. Отслеживание code-блоков ───────────────────────────────────────────
+// ─── 2. Отслеживание code-блоков, SpeakerNotes и HTML-комментариев ───────
 
 let inCodeBlock = false
+let inSpeakerNotes = false
+let inHtmlComment = false
 const codeBlockLines = []
 const textLines = []
 
@@ -74,6 +76,36 @@ lines.forEach((line, i) => {
       inCodeBlock = true
       codeBlockLines.push(i)
     }
+    return
+  }
+  // <SpeakerNotes> ... </SpeakerNotes> — пропускаем (legacy)
+  if (/<SpeakerNotes[\s>]/.test(line)) {
+    inSpeakerNotes = true
+  }
+  if (inSpeakerNotes) {
+    codeBlockLines.push(i)
+    if (/<\/SpeakerNotes>/.test(line)) {
+      inSpeakerNotes = false
+    }
+    return
+  }
+  // <!-- ... --> — HTML-комментарии (используются для speaker notes)
+  // Поддержка многострочных комментариев
+  if (/<!--/.test(line) && !/-->/.test(line)) {
+    inHtmlComment = true
+    codeBlockLines.push(i)
+    return
+  }
+  if (inHtmlComment) {
+    codeBlockLines.push(i)
+    if (/-->/.test(line)) {
+      inHtmlComment = false
+    }
+    return
+  }
+  // Однострочный комментарий <!-- ... -->
+  if (/<!--.*-->/.test(line)) {
+    codeBlockLines.push(i)
     return
   }
   if (inCodeBlock) {
@@ -103,9 +135,9 @@ const FORBIDDEN_IN_TEXT = [
   { ch: '—', name: 'длинное тире —', replacement: '– (среднее тире)' },
 ]
 
-// Регэксп для поиска HTML-атрибутов: <tag attr="value">
-// Это позволит пропускать " внутри атрибутов
-const HTML_ATTR_REGEX = /\s\w+="[^"]*"/g
+// Регэксп для поиска HTML-атрибутов: <tag attr="value"> или v-if="..."
+// Включаем vue-директивы (v-if, v-else, :class, @click и т.д.)
+const HTML_ATTR_REGEX = /(\s\w+|\s[:@v-][\w-]+)="[^"]*"/g
 
 // Регэксп для инлайн-кода: `code`
 const INLINE_CODE_REGEX = /`[^`]*`/g

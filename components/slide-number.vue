@@ -1,53 +1,49 @@
 <template>
-  <div
-    v-if="show"
-    class="slide-number"
-    :class="{ 'on-dark': onDark }"
-  >
-    {{ current }}
-  </div>
+  <div v-if="show" class="slide-number">{{ current }}</div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useSlideContext } from '@slidev/client'
+import { computed, onMounted, ref, watchEffect } from 'vue'
+import { useNav } from '@slidev/client'
 
-const { $slidev } = useSlideContext()
+const nav = useNav()
 
-// Не показываем на первом и последнем слайде
-const show = computed(() => {
-  const page = $slidev.nav.currentPage
-  const total = $slidev.nav.totalPages
-  return page !== 1 && page !== total
-})
+const current = ref(0)
+const total = ref(0)
 
-const current = computed(() => $slidev.nav.currentPage)
+// useNav() возвращает объект с реактивными свойствами
+// В Slidev 52.x: nav.currentPage и nav.totalPages — это ComputedRef
+// Но также могут быть функциями или простыми значениями
+function read() {
+  try {
+    const c = nav?.currentPage
+    const t = nav?.totalPages
+    current.value = typeof c === 'function' ? c() : (c?.value ?? c ?? 0)
+    total.value = typeof t === 'function' ? t() : (t?.value ?? t ?? 0)
+  } catch (e) {
+    // ignore
+  }
+}
 
-// На слайдах-разделителях (bg-black) — белый номер
-const onDark = computed(() => {
-  // Layout с class: bg-black — определяем по текущему слайду
-  const layout = $slidev.nav.currentLayout
-  // Проверим также class атрибут, но layout — надёжнее
-  return false // упрощаем: цвет всегда чёрный, на тёмных слайдах переопределим через CSS
+const show = computed(() => current.value > 1 && current.value < total.value)
+
+onMounted(() => {
+  read()
+  // watchEffect для автоматической подписки на реактивность
+  watchEffect(read)
 })
 </script>
 
 <style scoped>
 .slide-number {
-  position: absolute;
-  top: 1rem;
-  right: 1.5rem;
-  font-family: 'Arial', sans-serif;
-  font-size: 14pt;
-  font-weight: 400;
-  color: #000;
-  z-index: 100;
-  pointer-events: none;
-}
-
-/* На тёмных слайдах (родитель имеет bg-black) — белый номер */
-:global(.slidev-layout.bg-black) .slide-number,
-:global(.bg-black) .slide-number {
-  color: #fff !important;
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1.5rem !important;
+  font-family: 'Arial', sans-serif !important;
+  font-size: 14pt !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
 }
 </style>
