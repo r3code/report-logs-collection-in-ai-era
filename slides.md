@@ -1,6 +1,6 @@
 ---
 theme: default
-title: Сбор логов на vector и clickhouse - то, что ИИ за тебя >не сделал бы
+title: Сбор логов на vector и clickhouse – то, что ИИ за тебя >не сделал бы
 info: 'Доклад Дмитрия Синявского · HardFest'
 drawings:
   persist: false
