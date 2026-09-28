@@ -155,7 +155,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 Спросите GPT/Claude: «Как собрать логи из K8s используя Vector.dev в ClickHouse?»
 
-Он выдаст идеальный конфиг Vector. Запустите его – и всё заработает. Но только до первого масштабирования.
+Он выдаст идеальный конфиг Vector. Запустите его – и всё заработает. Но только пока сервисов мало и логи предсказуемые.
 
 <div class="absolute right-10 bottom-10 w-1/3 h-1/3 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center p-4 text-center rounded">
   [СКРИНШОТ: идеальный ответ Claude рядом с графиком реального инцидента]
@@ -293,8 +293,15 @@ metadata:
     logging.vitech.team/srv2.unified_log_model: "true"
     logging.vitech.team/srv3.unified_log_model: "true"
     # ... и так 10 раз
-    logging.vitech.team/srv10.unified_log_model: "true"
 ```
+
+<!--
+Слайд-сравнение: как было и как стало. Слева – «стена» из 10 аннотаций в одном деплойменте, которые ещё и могут не примениться из-за лимита 63 символа.
+-->
+
+---
+
+# Ловушка №1: один лейбл вместо стены
 
 Теперь – один лейбл на namespace:
 
@@ -306,8 +313,10 @@ metadata:
     tags.vitech.team/service_name: my-cool-service
 ```
 
+Один лейбл покрывает весь namespace сразу. Никаких аннотаций на контейнеры.
+
 <!--
-Слайд-сравнение: как было и как стало. Слева – «стена» из 10 аннотаций в одном деплойменте, которые ещё и могут не примениться из-за лимита 63 символа. Справа – один лейбл на namespace, который покрывает весь namespace сразу.
+Справа – один лейбл на namespace, который покрывает весь namespace сразу.
 -->
 
 ---
@@ -373,12 +382,12 @@ window_secs = 1
 Что показывал `lsof` на ноде, у которой диск был заполнен на 100%:
 
 ```text
-COMMAND   PID  USER   FD   TYPE  SIZE   NODE NAME
-vector   1234 root   45r  REG   1073741824 12345 /var/log/app/app.log.1 (deleted)
-vector   1234 root   46r  REG   1073741824 12346 /var/log/app/app.log.2 (deleted)
-vector   1234 root   47r  REG   1073741824 12347 /var/log/app/app.log.3 (deleted)
-vector   1234 root   48r  REG   1073741824 12348 /var/log/app/app.log.4 (deleted)
-vector   1234 root   49r  REG   1073741824 12349 /var/log/app/app.log.5 (deleted)
+COMMAND  PID   FD  TYPE  NAME
+vector   1234  45r REG   /var/log/app/app.log.1 (deleted)
+vector   1234  46r REG   /var/log/app/app.log.2 (deleted)
+vector   1234  47r REG   /var/log/app/app.log.3 (deleted)
+vector   1234  48r REG   /var/log/app/app.log.4 (deleted)
+vector   1234  49r REG   /var/log/app/app.log.5 (deleted)
 # ... сотни таких дескрипторов
 ```
 
@@ -505,8 +514,6 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 <ul class="progressive">
   <li class="active">1. Децентрализация конфигурации – зло</li>
-  <li>2. Логи – это нагрузка на систему</li>
-  <li>3. Хранение должно быть гибким</li>
 </ul>
 
 <!--
@@ -519,12 +526,11 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 <ul class="progressive">
   <li>1. Децентрализация конфигурации – зло</li>
-  <li class="active">2. Логи – это нагрузка на систему</li>
-  <li>3. Хранение должно быть гибким</li>
+  <li class="active">2. Защищайте инфраструктуру от самих логов</li>
 </ul>
 
 <!--
-Принцип 2: логи — это не просто текст, это нагрузка на систему. Vector по умолчанию не спасёт от «шумных соседей». Всегда явно настраивайте disk buffer, data_dir и троттлинг.
+Принцип 2: логи — это нагрузка на инфраструктуру, а не просто текст. Шумный сосед может уронить ноду, забить диск или исчерпать inodes. Vector по умолчанию от этого не спасёт — нужны disk buffer, data_dir и троттлинг на агентах.
 -->
 
 ---
@@ -533,7 +539,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 <ul class="progressive">
   <li>1. Децентрализация конфигурации – зло</li>
-  <li>2. Логи – это нагрузка на систему</li>
+  <li>2. Защищайте инфраструктуру от самих логов</li>
   <li class="active">3. Хранение должно быть гибким</li>
 </ul>
 
@@ -581,12 +587,10 @@ layout: end
 
 <p class="speaker-name">Дмитрий Синявский</p>
 
-Канал: t.me/letitkit
-
 <div class="flex items-center justify-center gap-12 mt-8">
   <img src="/images/qr-tg.png" class="w-64 h-64" alt="QR-код на Telegram-канал">
   <div>
-    <p class="text-black text-3xl font-bold">t.me/letitkit</p>
+    <p class="text-black text-3xl font-bold">Канал: t.me/letitkit</p>
     <p class="text-black mt-4">Сфотографируйте QR-код<br>или перейдите по ссылке</p>
   </div>
 </div>
