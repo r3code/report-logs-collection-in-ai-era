@@ -7,7 +7,7 @@ drawings:
 fonts:
   sans: 'Arial'
   mono: 'Fira Code'
-class: cover
+layout: cover
 ---
 
 # Сбор логов на vector и clickhouse – то, что ИИ за тебя не сделал бы
@@ -22,6 +22,8 @@ class: cover
 Краткое интро: я Дмитрий Синявский, SRE в Ви.Tech, веду каналы letitkit и allslo_ru. Доклад основан на двух предыдущих — DevOpsConf 2024 (миграция с EFK) и DevOpsConf 2025 (итоги двух лет с Unified Log Pipeline). Сегодня — про ловушки, которые не описаны в документации и которые LLM не предскажет.
 -->
 
+---
+clicks: 6
 ---
 
 # О чем поговорим
@@ -499,6 +501,8 @@ class: bg-black text-white flex flex-col justify-center p-20
 -->
 
 ---
+clicks: 3
+---
 
 # Итоги – 3 принципа
 
@@ -565,7 +569,7 @@ github.com/vseinstrumentiru/unified-log-pipeline
 -->
 
 ---
-class: end
+layout: end
 ---
 
 # Спасибо
