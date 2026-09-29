@@ -682,9 +682,9 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 <div class="flex items-start gap-8">
   <div class="w-2/3">
-    <p class="text-black text-3xl font-bold mb-6">Не верьте ИИ на слово.</p>
-    <p class="text-black mb-4"><strong>LLM напишет идеальный конфиг для демо</strong> – но не знает ваших граничных случаев, пока боль от практики не подскажет</p>
-    <p class="text-black mb-4"><strong>Не предусмотрит лимиты API</strong> – и не узнает, какой сервис у вас начнёт гнать 20 МБ/с логов</p>
+    <p class="text-black text-3xl font-bold mb-6">Не верьте ИИ на слово</p>
+    <p class="text-black mb-4"><strong>LLM напишет идеальный конфиг</strong> – но не знает твоих граничных случаев, пока боль от практики не подскажет их тебе</p>
+    <p class="text-black mb-4"><strong>Не предусмотрит всё</strong> – не знает, какой сервис начнёт гнать 20 МБ/с логов</p>
     <p class="text-black"><strong>Боль, основанная на практике и наблюдениях, а не на теории</strong> – единственный учитель в инфраструктуре</p>
   </div>
   <div class="w-1/3">
