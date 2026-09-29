@@ -46,8 +46,9 @@ jobs:
           sed -i "s/__VERSION__/$VERSION/g" slides.md
           grep -q "$VERSION" slides.md && echo "Version injected OK"
 
-      - name: Install Chromium for puppeteer
-        run: pnpm exec playwright install chromium --with-deps
+      - name: Install Chromium for Playwright
+        # playwright-chromium уже в devDependencies, нужно только скачать binary
+        run: pnpm exec playwright install chromium
         continue-on-error: true
 
       - name: Install python-pptx

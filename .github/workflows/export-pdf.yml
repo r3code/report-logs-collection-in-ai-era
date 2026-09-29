@@ -41,10 +41,9 @@ jobs:
           sed -i "s/__VERSION__/$VERSION/g" slides.md
           grep -q "$VERSION" slides.md && echo "Version injected OK"
 
-      - name: Install Chromium for puppeteer
-        # Slidev export использует puppeteer, которому нужен Chromium
-        # На ubuntu-latest обычно есть, но ставим явную зависимость
-        run: pnpm exec playwright install chromium --with-deps
+      - name: Install Chromium for Playwright
+        # playwright-chromium уже в devDependencies, нужно только скачать binary
+        run: pnpm exec playwright install chromium
         continue-on-error: true
 
       - name: Export slides to PDF
