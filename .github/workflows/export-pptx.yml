@@ -55,14 +55,14 @@ jobs:
         run: pip install --no-cache-dir python-pptx
 
       - name: Export slides to PNG (per-slide)
-        # --per-slide — каждый слайд в отдельный PNG файл
-        # slidev-png-export/slide-1.png, slide-2.png, ...
+        # --per-slide создаёт директорию slide/ с файлами 01.png, 02.png, ...
+        # --output "slides-png/export" → slides-png/export/01.png, 02.png, ...
         run: |
           mkdir -p slides-png
-          pnpm exec slidev export --format png --per-slide --output "slides-png/slide" --timeout 120000
+          pnpm exec slidev export --format png --per-slide --output "slides-png/export" --timeout 120000
 
       - name: List exported PNGs
-        run: ls -la slides-png/
+        run: ls -la slides-png/export/
 
       - name: Build PPTX from PNGs
         run: |
@@ -77,12 +77,13 @@ jobs:
           prs.slide_width = Inches(13.333)
           prs.slide_height = Inches(7.5)
 
-          # Естественная сортировка: slide-1, slide-2, ..., slide-10, slide-11
+          # Slidev создаёт файлы 01.png, 02.png, ..., 10.png, 11.png
+          # Естественная сортировка для правильного порядка
           def natural_key(name):
               import re
               return [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', name)]
 
-          pngs = sorted(glob.glob('slides-png/*.png'), key=natural_key)
+          pngs = sorted(glob.glob('slides-png/export/*.png'), key=natural_key)
           print(f"Найдено PNG: {len(pngs)}")
           for p in pngs:
               print(f"  - {p}")
@@ -121,6 +122,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: slides-png
-          path: slides-png/*.png
+          path: slides-png/export/*.png
           if-no-files-found: error
           retention-days: 14
