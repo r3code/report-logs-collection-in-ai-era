@@ -80,14 +80,15 @@
 
 /* Code-блоки: НЕ трогаем color — shiki сама ставит цвета через CSS-переменные */
 
-/* На слайдах-разделителях (bg-black) — контрастный текст (кроме code) */
+/* На слайдах-разделителях (bg-black) — ВСЕГДА белый текст (кроме code),
+   независимо от светлой/тёмной темы. Фон чёрный → нужен белый. */
 .slidev-layout.bg-black,
 .slidev-layout.bg-black *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout.bg-black *::before,
 .slidev-layout.bg-black *::after,
 .bg-black.slidev-layout,
 .bg-black.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
-  color: var(--vi-text-on-dark) !important;
+  color: #fff !important;
 }
 
 /* ─── Размеры шрифтов + line-height 1.3 ──────────────────────────────── */
@@ -327,5 +328,5 @@
 }
 .slidev-layout.bg-black .slide-number,
 .bg-black .slide-number {
-  color: var(--vi-text-on-dark) !important;
+  color: #fff !important;
 }
