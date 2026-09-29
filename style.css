@@ -1,12 +1,35 @@
-/* ─── Style Guide Дмитрия Синявского v6 ────────────────────────────────
+/* ─── Style Guide Дмитрия Синявского v7 (с поддержкой тёмной темы) ──────
  * Заголовки:  Arial 32pt
- * Основной:   Arial 21pt, line-height 1.3 (визуально как Google Slides 1.15)
- * Код:        Fira Code 18pt (СТРОГО!)
- * Буллеты:    heavy rounded arrow 14pt
+ * Основной:   Arial 20pt, line-height 1.3
+ * Код:        Fira Code 16pt
+ * Буллеты:    heavy round arrow 24pt
  * ──────────────────────────────────────────────────────────────────────
  */
 
-/* ─── ЖЁСТКО: весь текст ЧЁРНЫЙ (КРОМЕ code-блоков — там подсветка shiki) ── */
+/* ─── CSS-переменные для светлой/тёмной темы ─────────────────────────── */
+:root {
+  --vi-text: #000;
+  --vi-text-on-dark: #fff;
+  --vi-code-bg: #f3f4f6;
+  --vi-table-border: #e5e7eb;
+  --vi-table-header-bg: #f9fafb;
+  --vi-placeholder-bg: #e5e7eb;
+  --vi-placeholder-border: #9ca3af;
+  --vi-version-color: #374151;
+}
+
+.dark {
+  --vi-text: #fff;
+  --vi-text-on-dark: #000;
+  --vi-code-bg: #1f2937;
+  --vi-table-border: #374151;
+  --vi-table-header-bg: #1f2937;
+  --vi-placeholder-bg: #374151;
+  --vi-placeholder-border: #6b7280;
+  --vi-version-color: #9ca3af;
+}
+
+/* ─── ЖЁСТКО: весь текст одного цвета (КРОМЕ code-блоков — там подсветка shiki) ── */
 
 .slidev-layout,
 .slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
@@ -22,11 +45,10 @@
 .slidev-page *::after,
 .slidev-page-wrapper,
 .slidev-page-wrapper *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
-  color: #000 !important;
+  color: var(--vi-text) !important;
 }
 
-/* Slidev default даёт первому параграфу .slidev-layout > p:first-child
-   класс opacity-70 или text-grey. Переопределяем жёстче. */
+/* Slidev default даёт первому параграфу opacity. Убираем. */
 .slidev-layout > p,
 .slidev-layout > p:first-child,
 .slidev-layout > p:first-of-type,
@@ -35,21 +57,21 @@
 .slidev-layout.prose > p:first-of-type,
 .slidev-layout p,
 .slidev-layout.prose p {
-  color: #000 !important;
+  color: var(--vi-text) !important;
   opacity: 1 !important;
 }
 
-/* Дополнительно: любой элемент с opacity меньше 1 - поднимаем */
+/* Любой элемент с opacity — поднимаем до 1 */
 .slidev-layout [class*="opacity"],
 .slidev-layout.prose [class*="opacity"] {
   opacity: 1 !important;
 }
 
-/* Инлайн-код — чёрный на сером фоне, 16pt */
+/* Инлайн-код — одного цвета с текстом, на фоне кода, 16pt */
 .slidev-layout :not(pre) > code,
 .slidev-layout.prose :not(pre) > code {
-  color: #000 !important;
-  background: #f3f4f6 !important;
+  color: var(--vi-text) !important;
+  background: var(--vi-code-bg) !important;
   padding: 0.1em 0.35em !important;
   border-radius: 0.25em !important;
   font-size: 16pt !important;
@@ -57,16 +79,15 @@
 }
 
 /* Code-блоки: НЕ трогаем color — shiki сама ставит цвета через CSS-переменные */
-/* Убираем только background, padding, font-size, white-space */
 
-/* На слайдах-разделителях (bg-black) — белый текст (кроме code) */
+/* На слайдах-разделителях (bg-black) — контрастный текст (кроме code) */
 .slidev-layout.bg-black,
 .slidev-layout.bg-black *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout.bg-black *::before,
 .slidev-layout.bg-black *::after,
 .bg-black.slidev-layout,
 .bg-black.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
-  color: #fff !important;
+  color: var(--vi-text-on-dark) !important;
 }
 
 /* ─── Размеры шрифтов + line-height 1.3 ──────────────────────────────── */
@@ -117,7 +138,7 @@
   font-family: 'Arial', sans-serif !important;
 }
 
-/* ─── КОД: Fira Code 18pt (СТРОГО через multiple !important) ─────────── */
+/* ─── КОД: Fira Code 16pt (СТРОГО через multiple !important) ─────────── */
 
 .slidev-layout pre,
 .slidev-layout pre.slidev-code,
@@ -134,12 +155,11 @@
   white-space: pre-wrap !important;
   word-break: break-word !important;
   overflow-wrap: break-word !important;
-  background: #f3f4f6 !important;
+  background: var(--vi-code-bg) !important;
   padding: 0.75em 1em !important;
   border-radius: 0.5em !important;
 }
 
-/* ЖЁСТКО: любой pre и code внутри slidev-layout = 18pt */
 .slidev-layout pre,
 .slidev-layout.prose pre,
 .slidev-layout pre[class*="language-"],
@@ -170,7 +190,6 @@
   word-break: break-word !important;
 }
 
-/* Глобально: все потомки pre и code — 18pt */
 .slidev-layout pre *,
 .slidev-layout.prose pre *,
 .slidev-layout .slidev-code *,
@@ -180,12 +199,7 @@
   font-size: 16pt !important;
 }
 
-/* ─── Progressive Disclosure: списки через ul/li ────────────────────────
- * Используем <ul class="progressive"> с <li> внутри.
- * Активный пункт: data-active → символ ➜ (U+279C, heavy round tipped arrow)
- * Пройденный пункт: по умолчанию → символ •
- * Размер булета 18pt
- */
+/* ─── Progressive Disclosure: списки через ul/li ──────────────────────── */
 
 .slidev-layout ul.progressive,
 .slidev-layout.prose ul.progressive {
@@ -200,7 +214,7 @@
   padding-left: 1.8em !important;
   position: relative !important;
   margin-bottom: 0.5em !important;
-  color: #000 !important;
+  color: var(--vi-text) !important;
   font-size: 20pt !important;
   line-height: 1.3 !important;
 }
@@ -212,7 +226,7 @@
   left: 0 !important;
   top: 0 !important;
   font-size: 24pt !important;
-  color: #000 !important;
+  color: var(--vi-text) !important;
   font-weight: 800 !important;
   line-height: 1 !important;
   font-family: 'Arial', 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif !important;
@@ -231,14 +245,14 @@
   font-weight: 700 !important;
 }
 
-.slidev-layout .text-black { color: #000 !important; }
+.slidev-layout .text-black { color: var(--vi-text) !important; }
 .slidev-layout .font-bold { font-weight: 700 !important; }
 
 /* ─── Плейсхолдеры ───────────────────────────────────────────────────── */
-.slidev-layout .bg-gray-200 { background-color: #e5e7eb !important; }
+.slidev-layout .bg-gray-200 { background-color: var(--vi-placeholder-bg) !important; }
 .slidev-layout .border-dashed { border-style: dashed !important; }
 .slidev-layout .border-2 { border-width: 2px !important; }
-.slidev-layout .border-gray-400 { border-color: #9ca3af !important; }
+.slidev-layout .border-gray-400 { border-color: var(--vi-placeholder-border) !important; }
 
 /* ─── Изображения в слайдах ──────────────────────────────────────────── */
 .slidev-layout img {
@@ -264,13 +278,13 @@
 .slidev-layout.prose th,
 .slidev-layout.prose td {
   padding: 0.4em 0.6em !important;
-  border-bottom: 1px solid #e5e7eb !important;
+  border-bottom: 1px solid var(--vi-table-border) !important;
   text-align: left !important;
   line-height: 1.3 !important;
 }
 .slidev-layout th,
 .slidev-layout.prose th {
-  background: #f9fafb !important;
+  background: var(--vi-table-header-bg) !important;
   font-weight: 600 !important;
 }
 
@@ -307,11 +321,11 @@
   font-family: 'Arial', sans-serif !important;
   font-size: 14pt !important;
   font-weight: 400 !important;
-  color: #000 !important;
+  color: var(--vi-text) !important;
   z-index: 1000 !important;
   pointer-events: none !important;
 }
 .slidev-layout.bg-black .slide-number,
 .bg-black .slide-number {
-  color: #fff !important;
+  color: var(--vi-text-on-dark) !important;
 }

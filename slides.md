@@ -14,7 +14,9 @@ layout: cover
   <img src="/images/bg-slide-1.png" class="w-full h-full object-cover" alt="Фон презентации">
 </div>
 
-<img src="/images/vitech-logo-white-tech.svg" class="absolute z-20" style="top: 30px; right: 30px; height: 50px !important; width: auto !important; max-width: none !important;" alt="Ви.Tech логотип">
+<div class="absolute z-20" style="top: 30px; right: 30px; height: 50px; width: auto;">
+  <img src="/images/vitech-logo-white-tech.svg" style="height: 50px !important; width: auto !important; display: block;" alt="Ви.Tech логотип">
+</div>
 
 <p class="absolute bottom-0 right-3 z-20" style="font-size: 10pt !important; color: #374151 !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">__VERSION__</p>
 
