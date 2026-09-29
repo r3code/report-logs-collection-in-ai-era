@@ -243,6 +243,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 ```yaml
 logging.vitech.team/<container.name>.unified_log_model: "true"
+logging.vitech.team/<container.name>.service_name: "my-cool-service"
 ```
 
 **Лимит K8s API – 63 символа** на ключ аннотации
@@ -252,7 +253,7 @@ logging.vitech.team/<container.name>.unified_log_model: "true"
 **При 5–10 контейнерах в поде** – в каждый писать, не забывать обновлять
 
 <!--
-История: мы начали с аннотаций на контейнерах. Идея казалась красивой — каждый под объявляет, какие логи и как собирать. На практике: лимит K8s API — 63 символа на ключ аннотации. Если имя контейнера длинное, ключ `logging.vitech.team/<container.name>.unified_log_model` превышает лимит, и аннотация молча игнорируется.
+История: мы начали с аннотаций на контейнерах. Идея казалась красивой — каждый под объявляет, какие логи и как собирать. На практике: лимит K8s API — 63 символа на ключ аннотации. Если имя контейнера длинное, ключ `logging.vitech.team/<container.name>.*` превышает лимит, то деплой не пройдет с ошибкой The Deployment "my-cool-service" is invalid: metadata.annotations: Invalid value: "your-very-long-annotation-name-that-exceeds-sixty-three-characters": must be no more than 63 characters.
 
 Это не зависит от числа контейнеров в поде — зависит от длины имени одного контейнера. Но когда контейнеров в поде 5–10, и в каждом нужно прописать аннотацию, и при каждом деплое не забыть её обновить — это становится операционной болью. Не «включить сбор логов», а «не забыть включить и не сломать».
 
@@ -268,9 +269,10 @@ LLM здесь молчит, потому что он знает синтакс�
 ```yaml
 metadata:
   annotations:
-    logging.vitech.team/srv1.unified_log_model: "true"
-    logging.vitech.team/srv2.unified_log_model: "true"
-    logging.vitech.team/srv3.unified_log_model: "true"
+    logging.vitech.team/container1.unified_log_model: "true"
+    logging.vitech.team/container1.service_name: "my-cool-service"
+    logging.vitech.team/container2.unified_log_model: "true"
+    logging.vitech.team/container2.service_name: "my-cool-service"
     # ... и так 10 раз
 ```
 
