@@ -42,16 +42,14 @@ jobs:
           grep -q "$VERSION" slides.md && echo "Version injected OK"
 
       - name: Install Chromium for Playwright
-        # playwright-chromium уже в devDependencies, нужно только скачать binary
-        run: pnpm exec playwright install chromium
-        continue-on-error: true
+        # --with-deps ставит системные библиотеки (libnss3, libatk и т.д.)
+        # без --with-deps chromium запустится но упадёт с ошибкой
+        run: npx playwright install --with-deps chromium
 
       - name: Export slides to PDF
         # --with-clicks — экспортирует все шаги v-click как отдельные страницы
         # --timeout 120000 — 2 минуты на рендеринг (для сложных слайдов с картинками)
         run: pnpm exec slidev export --format pdf --with-clicks --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 120000
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4

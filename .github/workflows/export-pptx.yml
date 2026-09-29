@@ -47,9 +47,9 @@ jobs:
           grep -q "$VERSION" slides.md && echo "Version injected OK"
 
       - name: Install Chromium for Playwright
-        # playwright-chromium уже в devDependencies, нужно только скачать binary
-        run: pnpm exec playwright install chromium
-        continue-on-error: true
+        # --with-deps ставит системные библиотеки (libnss3, libatk и т.д.)
+        # без --with-deps chromium запустится но упадёт с ошибкой
+        run: npx playwright install --with-deps chromium
 
       - name: Install python-pptx
         run: pip install --no-cache-dir python-pptx
@@ -60,8 +60,6 @@ jobs:
         run: |
           mkdir -p slides-png
           pnpm exec slidev export --format png --per-slide --output "slides-png/slide" --timeout 120000
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
       - name: List exported PNGs
         run: ls -la slides-png/
