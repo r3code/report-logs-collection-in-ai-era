@@ -34,6 +34,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate version string
+        run: |
+          VERSION="$(date -u +%Y%m%d) r$(echo ${{ github.sha }} | cut -c1-7)"
+          echo "Version: $VERSION"
+          sed -i "s/__VERSION__/$VERSION/g" slides.md
+          grep -q "$VERSION" slides.md && echo "Version injected OK"
+
       - name: Install Chromium for puppeteer
         # Slidev export использует puppeteer, которому нужен Chromium
         # На ubuntu-latest обычно есть, но ставим явную зависимость
@@ -41,7 +48,9 @@ jobs:
         continue-on-error: true
 
       - name: Export slides to PDF
-        run: pnpm exec slidev export --format pdf --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 60000
+        # --with-clicks — экспортирует все шаги v-click как отдельные страницы
+        # --timeout 120000 — 2 минуты на рендеринг (для сложных слайдов с картинками)
+        run: pnpm exec slidev export --format pdf --with-clicks --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 120000
         env:
           PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 

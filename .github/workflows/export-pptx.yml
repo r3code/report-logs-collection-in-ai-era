@@ -39,6 +39,13 @@ jobs:
       - name: Install Node dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate version string
+        run: |
+          VERSION="$(date -u +%Y%m%d) r$(echo ${{ github.sha }} | cut -c1-7)"
+          echo "Version: $VERSION"
+          sed -i "s/__VERSION__/$VERSION/g" slides.md
+          grep -q "$VERSION" slides.md && echo "Version injected OK"
+
       - name: Install Chromium for puppeteer
         run: pnpm exec playwright install chromium --with-deps
         continue-on-error: true
@@ -46,12 +53,12 @@ jobs:
       - name: Install python-pptx
         run: pip install --no-cache-dir python-pptx
 
-      - name: Export slides to PNG
-        # slidev export --format png выдаёт один PNG со всеми слайдами в сетке
-        # поэтому используем --format png с опцией per-slide (через отдельный вызов)
+      - name: Export slides to PNG (per-slide)
+        # --per-slide — каждый слайд в отдельный PNG файл
+        # slidev-png-export/slide-1.png, slide-2.png, ...
         run: |
           mkdir -p slides-png
-          pnpm exec slidev export --format png --output "slides-png/slide" --timeout 60000
+          pnpm exec slidev export --format png --per-slide --output "slides-png/slide" --timeout 120000
         env:
           PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
@@ -64,16 +71,14 @@ jobs:
           import os
           import glob
           from pptx import Presentation
-          from pptx.util import Inches, Emu
+          from pptx.util import Inches
 
           # 16:9 стандартный размер слайда PowerPoint
-          # 13.333 дюйма x 7.5 дюйма = 1280x720 pt при 96 DPI
           prs = Presentation()
           prs.slide_width = Inches(13.333)
           prs.slide_height = Inches(7.5)
 
-          # Slidev нумерует файлы slide-1.png, slide-2.png, ... slide-10.png, slide-11.png
-          # Поэтому нужна естественная сортировка
+          # Естественная сортировка: slide-1, slide-2, ..., slide-10, slide-11
           def natural_key(name):
               import re
               return [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', name)]
@@ -90,7 +95,6 @@ jobs:
 
           for png in pngs:
               slide = prs.slides.add_slide(blank_layout)
-              # Картинка на весь слайд
               slide.shapes.add_picture(
                   png,
                   left=0,

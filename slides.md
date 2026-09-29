@@ -14,7 +14,7 @@ layout: cover
   <img src="/images/bg-slide-1.png" class="w-full h-full object-cover" alt="Фон презентации">
 </div>
 
-<p class="absolute bottom-0 right-3 z-20" style="font-size: 10pt !important; color: #374151 !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">20260928_01</p>
+<p class="absolute bottom-0 right-3 z-20" style="font-size: 10pt !important; color: #374151 !important; margin: 0 !important; padding: 0 !important; line-height: 1 !important;">__VERSION__</p>
 
 <div class="relative z-10 w-1/2 pr-8">
 <h1>Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы</h1>
@@ -183,9 +183,9 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 ---
 
-<div class="absolute inset-0 w-full h-full">
-  <img src="/images/chatgpt-vector-01.png" class="w-full h-full object-contain" alt="Ответ ChatGPT: схема Vector → ClickHouse">
-</div>
+# Типовой ответ AI про сбор логов
+
+<img src="/images/chatgpt-vector-01.png" class="mx-auto max-h-[70%] object-contain rounded" alt="Ответ ChatGPT: схема Vector → ClickHouse">
 
 <!--
 Полный скриншот ответа ChatGPT на вопрос «Как собрать логи из K8s в ClickHouse через Vector». Идеальная ASCII-схема, рабочий конфиг — всё красиво. Но это в вакууме. Дальше покажу, что в продакшене этот конфиг ломается на трёх уровнях.
@@ -391,7 +391,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 # Шумные соседи
 
-**`bff`: 6.39 → 20 MiB/s** при баге
+**Сервис `bff`: 6.39 → 20 MiB/s** при баге
 
 **Диск ноды Dev 50 ГБ** заполнился за 2 часа
 
@@ -682,7 +682,7 @@ class: bg-black text-white flex flex-col justify-center p-20
 
 <div class="flex items-center gap-8">
   <div class="w-2/3">
-    <p class="text-black mb-4"><strong>LLM напишет идеальный конфиг для демо</strong> – но не напишет тесты под ваши граничные случаи</p>
+    <p class="text-black mb-4"><strong>LLM напишет идеальный конфиг для демо</strong> – но не знает ваших граничных случаев, пока боль от практики не подскажет что тестировать</p>
     <p class="text-black mb-4"><strong>Не предусмотрит лимиты API</strong> – и не узнает, какой сервис у вас начнёт гнать 20 МБ/с логов</p>
     <p class="text-black"><strong>Боль, основанная на практике и наблюдениях, а не на теории</strong> – единственный учитель в инфраструктуре</p>
   </div>
