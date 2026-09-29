@@ -40,7 +40,7 @@ jobs:
         # Формат: YYYYMMDD r<short-sha>
         # Подставляется в slides.md вместо плейсхолдера __VERSION__
         run: |
-          VERSION="$(date -u +%Y%m%d) r$(echo ${{ github.sha }} | cut -c1-7)"
+          VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
           echo "Version: $VERSION"
           sed -i "s/__VERSION__/$VERSION/g" slides.md
           grep -q "$VERSION" slides.md && echo "Version injected OK"
