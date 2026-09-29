@@ -306,12 +306,12 @@
 .slidev-layout.cover .speaker-name {
   font-weight: 700 !important;
   font-size: 21pt !important;
-  margin-top: 1em !important;
+  margin-top: 2em !important;
 }
-.slidev-layout.cover .speaker-role,
-.slidev-layout.cover .speaker-company {
+.slidev-layout.cover .speaker-role {
   font-weight: 400 !important;
   font-size: 21pt !important;
+  margin-top: 0 !important;
 }
 
 /* ─── Номер слайда (через layouts/default.vue) ────────────────────────── */

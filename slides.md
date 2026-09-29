@@ -24,8 +24,7 @@ layout: cover
 <h1>Сбор логов на vector<br>и clickhouse<br>– то, что ИИ за тебя<br>не сделал бы</h1>
 
 <p class="speaker-name">Дмитрий Синявский</p>
-<p class="speaker-role">Инженер по надёжности (SRE)</p>
-<p class="speaker-company">Ви.Tech</p>
+<p class="speaker-role">Инженер по надёжности (SRE)<br>Ви.Tech</p>
 </div>
 
 <!--
