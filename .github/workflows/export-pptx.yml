@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.commit || 'main' }}
 
@@ -26,9 +26,9 @@ jobs:
           version: 8.15.6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Setup Python
@@ -111,7 +111,7 @@ jobs:
           PYEOF
 
       - name: Upload PPTX artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: slides-pptx
           path: "*.pptx"
@@ -119,7 +119,7 @@ jobs:
           retention-days: 30
 
       - name: Upload PNG artifact (опционально)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: slides-png
           path: slides-png/export/*.png
