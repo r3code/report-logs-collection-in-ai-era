@@ -1,15 +1,16 @@
 ---
 routeAlias: agenda
+clicks: 4
 ---
 
 # О чем поговорим
 
 <ul class="progressive">
-  <li :class="{ active: $clicks === 0 }">Иллюзия «готового решения»</li>
-  <li v-click :class="{ active: $clicks === 1 }">Ловушка №1: масштабирование управления</li>
-  <li v-click :class="{ active: $clicks === 2 }">Ловушка №2: инфраструктурные ограничения</li>
-  <li v-click :class="{ active: $clicks === 3 }">Ловушка №3: хранение – не просто таблица</li>
-  <li v-click :class="{ active: $clicks >= 4 }">Итоги – 3 принципа</li>
+  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Иллюзия «готового решения»</li>
+  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">Ловушка №1: масштабирование управления</li>
+  <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">Ловушка №2: инфраструктурные ограничения</li>
+  <li v-show="$clicks >= 3" :class="{ active: $clicks === 3 }">Ловушка №3: хранение – не просто таблица</li>
+  <li v-show="$clicks >= 4" :class="{ active: $clicks >= 4 }">Итоги – 3 принципа</li>
 </ul>
 
 <!--

@@ -1,11 +1,15 @@
+---
+clicks: 2
+---
+
 # Итоги – 3 принципа
 
 Три принципа, которые мы выстрадали и внедрили в Unified Log Pipeline
 
 <ul class="progressive">
-  <li :class="{ active: $clicks === 0 }">1. Централизуйте управление сбором логов</li>
-  <li v-click :class="{ active: $clicks === 1 }">2. Защищайте инфраструктуру от самих логов</li>
-  <li v-click :class="{ active: $clicks >= 2 }">3. Хранение должно быть гибким</li>
+  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">1. Централизуйте управление сбором логов</li>
+  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">2. Защищайте инфраструктуру от самих логов</li>
+  <li v-show="$clicks >= 2" :class="{ active: $clicks >= 2 }">3. Хранение должно быть гибким</li>
 </ul>
 
 <!--
