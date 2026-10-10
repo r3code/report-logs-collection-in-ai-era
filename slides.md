@@ -95,6 +95,10 @@ src: ./pages/02-trap1/05-exclusions.md
 ---
 
 ---
+src: ./pages/02-trap1/05d-boyarskiy-meme.md
+---
+
+---
 src: ./pages/02-trap1/06-one-for-all.md
 ---
 
