@@ -38,7 +38,7 @@ jobs:
         run: |
           VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
           echo "Version: $VERSION"
-          sed -i "s/__VERSION__/$VERSION/g" slides.md
+          sed -i "s/__VERSION__/$VERSION/g" slides.md pages/*/*.md
           grep -q "$VERSION" slides.md && echo "Version injected OK"
 
       - name: Install Chromium for Playwright
