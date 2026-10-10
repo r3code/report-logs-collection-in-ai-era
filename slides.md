@@ -59,15 +59,15 @@ src: ./pages/01-illusion/03-chatgpt-response.md
 ---
 
 ---
+src: ./pages/01-illusion/05c-ai-vs-reality.md
+---
+
+---
 src: ./pages/01-illusion/04-architecture.md
 ---
 
 ---
 src: ./pages/01-illusion/05b-structured-logs.md
----
-
----
-src: ./pages/01-illusion/05c-ai-vs-reality.md
 ---
 
 ---
