@@ -1,25 +1,24 @@
 # Но ИИ скоро всё сможет, ему просто нужно:
 
-<div class="flex">
-  <div class="w-2/3 pr-8">
-    <v-click>
+<div class="w-2/3 pr-8">
+  <v-click>
 
-    - Иметь MCP на каждое приложение, БД, кэш, платформу, сервер
-    - Загрузить контекст всего этого в себя
-    - В реалтайме реагировать на изменения в системе
-    - ...и как-то не разломать всё это в попытках починить
+  - Иметь MCP на каждое приложение, БД, кэш, платформу, сервер
+  - Загрузить контекст всего этого в себя
+  - В реалтайме реагировать на изменения в системе
+  - ...и как-то не разломать всё это в попытках починить
 
-    </v-click>
+  </v-click>
 
-    <v-click>
+  <v-click>
 
-    <p class="mt-8 text-gray-700 italic">ИИ когда должен сам собрать логи, хранить, удалять, троттлить, партиционировать и не сломать прод</p>
+  <p class="mt-8 italic" style="color: var(--vi-text); opacity: 0.7;">ИИ когда должен сам собрать логи, хранить, удалять, троттлить, партиционировать и не сломать прод</p>
 
-    </v-click>
-  </div>
-  <div class="absolute right-0 bottom-0 h-full flex items-end">
-    <img src="/images/one-man-band.png" class="max-h-full object-contain object-bottom" alt="One man band">
-  </div>
+  </v-click>
+</div>
+
+<div class="absolute right-0 bottom-0" style="height: 90%; display: flex; align-items: flex-end;">
+  <img src="/images/one-man-band.png" style="max-height: 100%; max-width: 35%; object-fit: contain;" alt="One man band">
 </div>
 
 <!--
