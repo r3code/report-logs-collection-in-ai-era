@@ -1,35 +1,12 @@
 # Но ИИ скоро всё сможет, ему просто нужно:
 
 <div class="w-2/3 pr-8">
-  <v-click>
-
-  - Иметь MCP на каждое приложение, БД, кэш, платформу, сервер
-
-  </v-click>
-
-  <v-click>
-
-  - Загрузить контекст всего этого в себя
-
-  </v-click>
-
-  <v-click>
-
-  - В реалтайме реагировать на изменения в системе
-
-  </v-click>
-
-  <v-click>
-
-  - ...и как-то не разломать всё это в попытках починить
-
-  </v-click>
-
-  <v-click>
-
-  <p class="mt-8 italic" style="color: var(--vi-text); opacity: 0.7;">ИИ когда должен сам собрать логи, хранить, удалять, троттлить, партиционировать и не сломать прод</p>
-
-  </v-click>
+  <ul class="progressive">
+    <li v-click :class="{ active: $clicks === 0 }">Иметь MCP на каждое приложение, БД, кэш, платформу, сервер</li>
+    <li v-click :class="{ active: $clicks === 1 }">Загрузить контекст всего этого в себя</li>
+    <li v-click :class="{ active: $clicks === 2 }">В реалтайме реагировать на изменения в системе</li>
+    <li v-click :class="{ active: $clicks >= 3 }">...и как-то не разломать всё это в попытках починить</li>
+  </ul>
 </div>
 
 <div class="absolute right-0 bottom-0" style="width: 40%; top: 120px; display: flex; align-items: center; justify-content: flex-end;">
