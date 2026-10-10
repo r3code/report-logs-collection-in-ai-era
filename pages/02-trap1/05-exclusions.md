@@ -4,7 +4,7 @@
 
 <v-click>
 
-**Vector-аннотации** – для точечного исключения pod или контейнеров в нём:
+**1. Vector-аннотации** – для точечного исключения pod или контейнеров в нём:
 
 ```yaml
 vector.dev/exclude: "true"
@@ -15,7 +15,7 @@ vector.dev/exclude-containers: "container1,container2"
 
 <v-click>
 
-**`excluded_services`** – настройка исключения сервисов по namespace на vector-агентах. Настройка через список excluded_services в конфигурации агента.
+**2. Настройка исключения сервисов по namespace на vector-агентах.** Задаем список `excluded_services` в конфигурации агента.
 
 </v-click>
 

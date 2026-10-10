@@ -1,5 +1,7 @@
 # Схема ClickHouse (1/2)
 
+<v-click>
+
 **Единая таблица `logs_local`** (ReplicatedMergeTree) с динамическим TTL:
 
 ```sql
@@ -10,13 +12,15 @@ TTL toDateTime(ObservedTimestamp) + toIntervalDay(TTL)
 ...
 ```
 
+</v-click>
+
 <v-click>
 
 **Ключевые решения:**
 
-- **`logs_local` + `logs` (Distributed)** – на каждом узле кластера
-
 - **Динамический TTL через `TTL UInt16`**
+
+- **`logs_local` + `logs` (Distributed)** – на каждом узле кластера
 
 </v-click>
 

@@ -1,5 +1,5 @@
 ---
-class: bg-black text-white flex flex-col justify-center p-20
+class: bg-black text-white flex flex-col p-20 pt-1/4
 ---
 
 # Иллюзия «готового решения»
