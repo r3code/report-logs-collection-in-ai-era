@@ -151,10 +151,6 @@ src: ./pages/04-trap3/02-ttl-policy.md
 ---
 
 ---
-src: ./pages/04-trap3/02b-interactive.md
----
-
----
 src: ./pages/04-trap3/03-sre-meme.md
 ---
 
@@ -172,6 +168,10 @@ src: ./pages/04-trap3/06-schema-1.md
 
 ---
 src: ./pages/04-trap3/07-schema-2.md
+---
+
+---
+src: ./pages/04-trap3/02b-interactive.md
 ---
 
 ---
