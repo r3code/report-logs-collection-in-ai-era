@@ -5,7 +5,7 @@
   "packageManager": "pnpm@8.15.6",
   "scripts": {
     "build": "slidev build",
-    "build:pages": "slidev build --base /report-logs-collection-in-ai-era/",
+    "build:pages": "slidev build --base /report-logs-collection-in-ai-era/ --without-notes",
     "dev": "slidev --open",
     "export": "slidev export",
     "export-pdf": "slidev export --format pdf",
@@ -16,6 +16,8 @@
     "@slidev/theme-default": "latest"
   },
   "devDependencies": {
+    "@fontsource/fira-code": "^5.3.0",
+    "@fontsource/noto-sans": "^5.3.0",
     "playwright-chromium": "^1.40.0"
   }
 }

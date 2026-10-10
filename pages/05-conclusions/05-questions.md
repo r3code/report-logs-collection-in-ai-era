@@ -1,5 +1,6 @@
 ---
 layout: end
+routeAlias: questions
 ---
 
 # Время задавать вопросы! Спрашиваете.

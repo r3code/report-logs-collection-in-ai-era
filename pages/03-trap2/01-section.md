@@ -1,5 +1,6 @@
 ---
 class: bg-black text-white flex flex-col p-20 pt-1/4
+routeAlias: trap2
 ---
 
 # Ловушка №2: инфраструктурные ограничения

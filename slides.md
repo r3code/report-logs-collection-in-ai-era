@@ -2,10 +2,11 @@
 theme: default
 title: Сбор логов на vector и clickhouse – то, что ИИ за тебя не сделал бы
 info: 'Доклад Дмитрия Синявского · HardFest'
+routeAlias: cover
 drawings:
   persist: false
 fonts:
-  sans: 'Arial'
+  sans: 'Noto Sans'
   mono: 'Fira Code'
 layout: cover
 ---

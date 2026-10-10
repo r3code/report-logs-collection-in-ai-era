@@ -13,6 +13,12 @@ dependencies:
     version: 0.25.0
 
 devDependencies:
+  '@fontsource/fira-code':
+    specifier: ^5.3.0
+    version: 5.3.0
+  '@fontsource/noto-sans':
+    specifier: ^5.3.0
+    version: 5.3.0
   playwright-chromium:
     specifier: ^1.40.0
     version: 1.63.0
@@ -389,6 +395,14 @@ packages:
   /@floating-ui/utils@0.2.12:
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
     dev: false
+
+  /@fontsource/fira-code@5.3.0:
+    resolution: {integrity: sha512-EJL968RJRkakubAj/coU8pSUaeTE5UNoRjtzAr6kGiSZ3jWuN8/AKWHwym/PFUaQL1q7IL/H+EXs4358YhrTBQ==}
+    dev: true
+
+  /@fontsource/noto-sans@5.3.0:
+    resolution: {integrity: sha512-fBCog2PY7DiVVTEEqtI/Qdinx/knobHYfoGpjFXdfBX5RoJaBp1Prw2G75p0OIsdlMZg3cLo0c+YbIUYOxnQJw==}
+    dev: true
 
   /@hono/node-server@1.19.17(hono@4.13.9):
     resolution: {integrity: sha512-dSneS5qhiauZWGDCeK4o695Xd9nUNjviSZCMQrj10eetr8Uln1ucn6bbphOM6UynAMMtNIzZNSpL9vnASJwrPQ==}
@@ -1613,6 +1627,7 @@ packages:
 
   /@types/estree@1.0.9:
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
+    requiresBuild: true
     dev: false
 
   /@types/geojson@7946.0.16:

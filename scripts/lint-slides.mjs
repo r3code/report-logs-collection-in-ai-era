@@ -43,7 +43,7 @@ if (!fmMatch) {
     'title:': null,
     'info:': null,
     'fonts:': null,
-    'sans:': 'Arial',
+    'sans:': 'Noto Sans',
     'mono:': 'Fira Code',
   }
   for (const [key, val] of Object.entries(required)) {

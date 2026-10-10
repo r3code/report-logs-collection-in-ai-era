@@ -1,5 +1,6 @@
 ---
 class: bg-black text-white flex flex-col p-20 pt-1/4
+routeAlias: trap3
 ---
 
 # Ловушка №3: хранение – не просто таблица
