@@ -63,6 +63,14 @@ src: ./pages/01-illusion/04-architecture.md
 ---
 
 ---
+src: ./pages/01-illusion/05b-structured-logs.md
+---
+
+---
+src: ./pages/01-illusion/05c-ai-vs-reality.md
+---
+
+---
 src: ./pages/01-illusion/05-scale.md
 ---
 
@@ -92,10 +100,6 @@ src: ./pages/02-trap1/06-one-for-all.md
 
 ---
 src: ./pages/02-trap1/07-vrl.md
----
-
----
-src: ./pages/02-trap1/08b-why-json.md
 ---
 
 ---
