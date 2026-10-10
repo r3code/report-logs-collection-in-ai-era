@@ -48,7 +48,8 @@
   color: var(--vi-text) !important;
 }
 
-/* Slidev default даёт первому параграфу opacity. Убираем. */
+/* Slidev default даёт первому параграфу opacity. Убираем,
+   НО не трогаем v-click скрытые элементы. */
 .slidev-layout > p,
 .slidev-layout > p:first-child,
 .slidev-layout > p:first-of-type,
@@ -58,12 +59,17 @@
 .slidev-layout p,
 .slidev-layout.prose p {
   color: var(--vi-text) !important;
-  opacity: 1 !important;
 }
 
-/* Любой элемент с opacity — поднимаем до 1 */
-.slidev-layout [class*="opacity"],
-.slidev-layout.prose [class*="opacity"] {
+/* v-click: скрытые элементы ДОЛЖНЫ быть скрыты */
+.slidev-vclick-hidden {
+  display: none !important;
+}
+
+/* Любой элемент с opacity классом — поднимаем до 1,
+   КРОМЕ v-click скрытых */
+.slidev-layout [class*="opacity"]:not(.slidev-vclick-hidden),
+.slidev-layout.prose [class*="opacity"]:not(.slidev-vclick-hidden) {
   opacity: 1 !important;
 }
 
