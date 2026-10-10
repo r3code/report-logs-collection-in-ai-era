@@ -95,6 +95,10 @@ src: ./pages/02-trap1/07-vrl.md
 ---
 
 ---
+src: ./pages/02-trap1/08b-why-json.md
+---
+
+---
 src: ./pages/02-trap1/08-results.md
 ---
 
@@ -104,6 +108,10 @@ src: ./pages/03-trap2/01-section.md
 
 ---
 src: ./pages/03-trap2/02-noisy-neighbors.md
+---
+
+---
+src: ./pages/03-trap2/02b-interactive.md
 ---
 
 ---
@@ -131,6 +139,10 @@ src: ./pages/04-trap3/02-ttl-policy.md
 ---
 
 ---
+src: ./pages/04-trap3/02b-interactive.md
+---
+
+---
 src: ./pages/04-trap3/03-sre-meme.md
 ---
 
@@ -143,6 +155,10 @@ src: ./pages/04-trap3/05-ttl-solution.md
 ---
 
 ---
+src: ./pages/04-trap3/05b-batching.md
+---
+
+---
 src: ./pages/04-trap3/06-schema-1.md
 ---
 
@@ -151,11 +167,19 @@ src: ./pages/04-trap3/07-schema-2.md
 ---
 
 ---
+src: ./pages/04-trap3/07b-partitions.md
+---
+
+---
 src: ./pages/05-conclusions/01-section.md
 ---
 
 ---
 src: ./pages/05-conclusions/02-principles.md
+---
+
+---
+src: ./pages/05-conclusions/02b-ai-joke.md
 ---
 
 ---

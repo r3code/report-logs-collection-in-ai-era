@@ -13,7 +13,7 @@ metadata:
 
 <v-click>
 
-**И так 10 раз**
+<p class="text-red-600 text-3xl font-bold">И так 10 раз</p>
 
 </v-click>
 
