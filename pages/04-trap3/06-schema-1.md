@@ -27,5 +27,5 @@ TTL toDateTime(ObservedTimestamp) + toIntervalDay(TTL)
 <!--
 Схема: одна таблица `logs_local` на каждом узле кластера ClickHouse. Поверх — распределённая таблица `logs` для запросов.
 
-Фокус — колонка `TTL UInt16 DEFAULT 7`. Каждая запись несёт свой срок хранения. TTL вычисляется динамически: `toDateTime(ObservedTimestamp) + toIntervalDay(TTL)`. Платёжный лог — `TTL = 30`, Dev-лог — `TTL = 3`. Одна таблица, одна схема, разные сроки.
+[click] Фокус — колонка `TTL UInt16 DEFAULT 7`. Каждая запись несёт свой срок хранения. TTL вычисляется динамически: `toDateTime(ObservedTimestamp) + toIntervalDay(TTL)`. Платёжный лог — `TTL = 30`, Dev-лог — `TTL = 3`. Одна таблица, одна схема, разные сроки.
 -->
