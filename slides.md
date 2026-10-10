@@ -67,11 +67,15 @@ src: ./pages/01-illusion/04-architecture.md
 ---
 
 ---
+src: ./pages/01-illusion/05-scale.md
+---
+
+---
 src: ./pages/01-illusion/05b-structured-logs.md
 ---
 
 ---
-src: ./pages/01-illusion/05-scale.md
+src: ./pages/04-trap3/05b-batching.md
 ---
 
 ---
@@ -160,10 +164,6 @@ src: ./pages/04-trap3/04-ttl-options.md
 
 ---
 src: ./pages/04-trap3/05-ttl-solution.md
----
-
----
-src: ./pages/04-trap3/05b-batching.md
 ---
 
 ---
