@@ -17,8 +17,8 @@
   </v-click>
 </div>
 
-<div class="absolute right-0 bottom-0" style="height: 90%; display: flex; align-items: flex-end;">
-  <img src="/images/one-man-band.png" style="max-height: 100%; max-width: 35%; object-fit: contain;" alt="One man band">
+<div class="absolute right-0 top-0 bottom-0" style="width: 40%; display: flex; align-items: center; justify-content: flex-end;">
+  <img src="/images/one-man-band.png" style="max-height: 85%; max-width: 100%; object-fit: contain;" alt="One man band">
 </div>
 
 <!--
