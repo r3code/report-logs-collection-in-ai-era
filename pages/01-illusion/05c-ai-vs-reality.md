@@ -20,7 +20,7 @@
 
 <v-click>
 
-Наш **Unified Log Pipeline** реализует это – одна таблица, одна схема
+У нас **Unified Log Pipeline** – одна таблица, одна схема
 
 </v-click>
 
