@@ -187,11 +187,11 @@ src: ./pages/05-conclusions/02-principles.md
 ---
 
 ---
-src: ./pages/05-conclusions/02b-ai-joke.md
+src: ./pages/05-conclusions/03-main-conclusion.md
 ---
 
 ---
-src: ./pages/05-conclusions/03-main-conclusion.md
+src: ./pages/05-conclusions/02b-ai-joke.md
 ---
 
 ---
