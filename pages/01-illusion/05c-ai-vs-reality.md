@@ -8,6 +8,12 @@
 
 <v-click>
 
+<img src="/images/harold-logs-support.png" class="mx-auto max-h-60 rounded" alt="Harold hides the pain of supporting dozens of tables">
+
+</v-click>
+
+<v-click>
+
 **А нужно** – универсальное решение: OpenTelemetry Logs Data Model
 
 </v-click>
@@ -15,12 +21,6 @@
 <v-click>
 
 **Почему:** потому что...
-
-</v-click>
-
-<v-click>
-
-<img src="/images/harold-logs-support.png" class="mx-auto max-h-72 rounded" alt="Harold hides the pain of supporting dozens of tables">
 
 </v-click>
 
