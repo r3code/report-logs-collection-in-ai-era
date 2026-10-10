@@ -1,11 +1,15 @@
+---
+clicks: 3
+---
+
 # Но ИИ скоро всё сможет, ему просто нужно:
 
 <div class="w-2/3 pr-8">
   <ul class="progressive">
-    <li v-click :class="{ active: $clicks === 0 }">Иметь MCP на каждое приложение, БД, кэш, платформу, сервер</li>
-    <li v-click :class="{ active: $clicks === 1 }">Загрузить контекст всего этого в себя</li>
-    <li v-click :class="{ active: $clicks === 2 }">В реалтайме реагировать на изменения в системе</li>
-    <li v-click :class="{ active: $clicks >= 3 }">...и как-то не разломать всё это в попытках починить</li>
+    <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Иметь MCP на каждое приложение, БД, кэш, платформу, сервер</li>
+    <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">Загрузить контекст всего этого в себя</li>
+    <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">В реалтайме реагировать на изменения в системе</li>
+    <li v-show="$clicks >= 3" :class="{ active: $clicks >= 3 }">...и как-то не разломать всё это в попытках починить</li>
   </ul>
 </div>
 

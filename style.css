@@ -243,7 +243,7 @@
 }
 
 .slidev-layout ul.progressive li.active {
-  font-weight: 700 !important;
+  font-weight: 400 !important;
 }
 
 .slidev-layout .text-black { color: var(--vi-text) !important; }
