@@ -6,10 +6,6 @@
 
 А какая проблема возникнет сейчас?
 
-</v-click>
-
-<v-click>
-
 <div class="flex justify-center mt-8">
   <img src="/images/question.png" class="max-h-60 object-contain" alt="Вопрос">
 </div>
