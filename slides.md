@@ -123,11 +123,11 @@ src: ./pages/03-trap2/02-noisy-neighbors.md
 ---
 
 ---
-src: ./pages/03-trap2/02b-interactive.md
+src: ./pages/03-trap2/03-lsof.md
 ---
 
 ---
-src: ./pages/03-trap2/03-lsof.md
+src: ./pages/03-trap2/03b-no-space.md
 ---
 
 ---
