@@ -201,3 +201,7 @@ src: ./pages/05-conclusions/04-repo-qr.md
 ---
 src: ./pages/05-conclusions/05-questions.md
 ---
+
+---
+src: ./pages/05-conclusions/06-hardfest-feedback.md
+---

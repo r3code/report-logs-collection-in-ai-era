@@ -3,7 +3,7 @@ layout: end
 routeAlias: questions
 ---
 
-# Время задавать вопросы! Спрашиваете.
+# Продолжить знакомство - читай меня
 
 <div class="flex items-center justify-center gap-12 mt-8">
   <img src="/images/qr-tg.png" class="w-64 h-64" alt="QR-код на Telegram-канал">
