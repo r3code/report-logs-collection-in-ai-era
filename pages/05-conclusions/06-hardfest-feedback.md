@@ -4,10 +4,10 @@ layout: end
 
 <div class="flex items-start justify-between w-full h-full p-8">
   <div class="flex flex-col items-center justify-center h-full">
-    <img src="/images/hardfest-qr-code-zal-1.png" style="max-width: 30%;" alt="QR-код для голосования HardFest">
+    <img src="/images/hardfest-qr-code-zal-1.png" style="max-width: 60%;" alt="QR-код для голосования HardFest">
   </div>
   <div class="flex flex-col items-center justify-center h-full w-2/3">
-    <img src="/images/hardfest-logo-bw.jpg" style="max-width: 20%;" class="mb-8" alt="Логотип HardFest">
+    <img src="/images/hardfest-logo-bw.jpg" style="max-width: 40%;" class="mb-8" alt="Логотип HardFest">
     <p class="text-black text-3xl font-bold">Дмитрий Синявский</p>
     <p class="text-black text-xl mt-2">SRE, Ви.Tech</p>
   </div>
