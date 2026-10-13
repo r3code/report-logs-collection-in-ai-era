@@ -17,7 +17,7 @@
 <v-click>
 
 <div class="absolute bottom-0 left-0 right-0">
-  <img src="/images/expectation-reality.png" class="mx-auto rounded" style="max-height: 50vh; max-width: 100%; object-fit: contain;" alt="Ожидание / Реальность">
+  <img src="/images/expectation-reality.png" class="mx-auto rounded" style="max-height: 70vh; max-width: 100%; object-fit: contain;" alt="Ожидание / Реальность">
 </div>
 
 </v-click>
