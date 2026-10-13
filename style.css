@@ -330,3 +330,10 @@
 .bg-black .slide-number {
   color: #fff !important;
 }
+
+/* Скрыть счётчик страниц при экспорте */
+.slidev-progress,
+.slidev-page-number,
+.slidev-clicks-indicator {
+  display: none !important;
+}

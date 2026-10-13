@@ -5,6 +5,8 @@ info: 'Доклад Дмитрия Синявского · HardFest'
 routeAlias: cover
 drawings:
   persist: false
+export:
+  showProgress: false
 fonts:
   sans: 'Noto Sans'
   mono: 'Fira Code'
