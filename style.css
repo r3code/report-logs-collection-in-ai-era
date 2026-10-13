@@ -343,3 +343,14 @@
 .slidev-page-no {
   display: none !important;
 }
+
+
+/* ─── Подсветка кода: усилить контраст ────────────────────────────── */
+/* Shiki использует CSS-переменные --shiki-light/--shiki-dark в inline style */
+/* Строковые значения в YAML: #B56959 (красно-коричневый) → ярко-синий */
+.slidev-layout .shiki span[style*="B56959"],
+.slidev-layout .shiki span[style*="b56959"] {
+  --shiki-light: #0550ae !important;
+  --shiki-dark: #4493f8 !important;
+  opacity: 1 !important;
+}
