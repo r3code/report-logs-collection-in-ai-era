@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 8.15.6
 
@@ -103,7 +103,7 @@ jobs:
           PYEOF
 
       - name: Upload PPTX artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: slides-pptx
           path: "*.pptx"
@@ -111,7 +111,7 @@ jobs:
           retention-days: 30
 
       - name: Upload PNG artifact (опционально)
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: slides-png
           path: slides-png/export/*.png

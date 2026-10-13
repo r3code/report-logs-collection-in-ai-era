@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 8.15.6
 
@@ -44,7 +44,7 @@ jobs:
         run: pnpm exec slidev export --format pdf --with-clicks --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 120000
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: slides-pdf
           path: "*.pdf"
