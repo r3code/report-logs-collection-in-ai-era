@@ -80,8 +80,9 @@
 
 /* Code-блоки: НЕ трогаем color — shiki сама ставит цвета через CSS-переменные */
 
-/* На слайдах-разделителях (bg-black) — ВСЕГДА белый текст (кроме code),
-   независимо от светлой/тёмной темы. Фон чёрный → нужен белый. */
+/* На слайдах-разделителях (bg-black):
+   Светлая тема: чёрный фон + белый текст
+   Тёмная тема: инверсия — белый фон + чёрный текст (чтобы не сливалось) */
 .slidev-layout.bg-black,
 .slidev-layout.bg-black *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
 .slidev-layout.bg-black *::before,
@@ -89,6 +90,18 @@
 .bg-black.slidev-layout,
 .bg-black.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
   color: #fff !important;
+}
+
+/* Тёмная тема: инверсия разделителей */
+.dark .slidev-layout.bg-black,
+.dark .bg-black.slidev-layout {
+  background: #fff !important;
+}
+.dark .slidev-layout.bg-black *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *),
+.dark .slidev-layout.bg-black *::before,
+.dark .slidev-layout.bg-black *::after,
+.dark .bg-black.slidev-layout *:not(.shiki):not(.shiki *):not(pre):not(pre *):not(.slidev-code):not(.slidev-code *) {
+  color: #000 !important;
 }
 
 /* ─── Размеры шрифтов + line-height 1.3 ──────────────────────────────── */
@@ -329,6 +342,10 @@
 .slidev-layout.bg-black .slide-number,
 .bg-black .slide-number {
   color: #fff !important;
+}
+.dark .slidev-layout.bg-black .slide-number,
+.dark .bg-black .slide-number {
+  color: #000 !important;
 }
 
 /* Скрыть счётчик страниц при экспорте */
