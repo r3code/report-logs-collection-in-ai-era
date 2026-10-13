@@ -1,6 +1,6 @@
 # Типовой ответ AI про сбор логов
 
-<div class="absolute left-0 right-0 bottom-0" style="top: 80px;">
+<div class="absolute left-0 right-0 bottom-0" style="top: 110px;">
   <img src="/images/chatgpt-vector-01.png" class="mx-auto rounded" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Ответ ChatGPT: схема Vector → ClickHouse">
 </div>
 
