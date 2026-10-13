@@ -330,3 +330,9 @@
 .bg-black .slide-number {
   color: #fff !important;
 }
+
+/* Скрыть footer со счётчиком страниц */
+.slidev-layout footer,
+.slidev-page-no {
+  display: none !important;
+}
