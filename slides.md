@@ -7,6 +7,8 @@ drawings:
   persist: false
 export:
   showProgress: false
+highlighter:
+  theme: vitesse-light
 fonts:
   sans: 'Noto Sans'
   mono: 'Fira Code'
