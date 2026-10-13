@@ -7,8 +7,6 @@ drawings:
   persist: false
 export:
   showProgress: false
-head:
-  - <style>.slidev-page-number,.slidev-progress,.slidev-clicks-indicator,.slidev-page-no,.slidev-layout footer{display:none!important;opacity:0!important;visibility:hidden!important}</style>
 fonts:
   sans: 'Noto Sans'
   mono: 'Fira Code'
