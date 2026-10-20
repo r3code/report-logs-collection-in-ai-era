@@ -42,7 +42,9 @@ jobs:
       - name: Export slides to PDF
         # --with-clicks — экспортирует все шаги v-click как отдельные страницы
         # --timeout 120000 — 2 минуты на рендеринг (для сложных слайдов с картинками)
-        run: pnpm exec slidev export --format pdf --with-clicks --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 120000
+        # --wait-until networkidle — ждать пока загрузятся все картинки (иначе PDF может выйти без них)
+        # --wait 1500 — дополнительная пауза 1.5с после networkidle для надёжности
+        run: pnpm exec slidev export --format pdf --with-clicks --wait-until networkidle --wait 1500 --output "Сбор-логов-на-vector-и-clickhouse.pdf" --timeout 120000
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v6

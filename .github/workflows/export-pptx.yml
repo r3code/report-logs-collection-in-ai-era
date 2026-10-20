@@ -50,9 +50,11 @@ jobs:
       - name: Export slides to PNG (per-slide)
         # --per-slide создаёт директорию slide/ с файлами 01.png, 02.png, ...
         # --output "slides-png/export" → slides-png/export/01.png, 02.png, ...
+        # --wait-until networkidle — ждать пока загрузятся все картинки (иначе PNG может выйти без них)
+        # --wait 1500 — дополнительная пауза 1.5с после networkidle для надёжности
         run: |
           mkdir -p slides-png
-          pnpm exec slidev export --format png --per-slide --output "slides-png/export" --timeout 120000
+          pnpm exec slidev export --format png --per-slide --wait-until networkidle --wait 1500 --output "slides-png/export" --timeout 120000
 
       - name: List exported PNGs
         run: ls -la slides-png/export/
