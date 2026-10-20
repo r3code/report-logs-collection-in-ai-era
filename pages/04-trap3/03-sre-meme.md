@@ -1,7 +1,7 @@
 # У нас было 3 SRE на 100 сервисов
 
 <div class="flex flex-col items-center">
-  <img src="/images/strah-nenavist-lasvegas.jpg" class="max-h-3/4 max-w-full object-contain" alt="Страх и ненависть в Лас-Вегасе">
+  <img src="/images/strah-nenavist-lasvegas.jpg" style="max-height: 60vh; max-width: 100%; object-fit: contain;" alt="Страх и ненависть в Лас-Вегасе">
   <p class="text-2xl font-bold mt-6">И ВАРИАНТЫ УПРАВЛЯТЬ TTL</p>
 </div>
 
